@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SchetsEditor</RootNamespace>
     <AssemblyName>Schets</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -102,6 +102,8 @@
     <None Include="Resources\text.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\circle.png" />
+    <None Include="Resources\border-circle.png" />
     <Content Include="Veranderingen.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
