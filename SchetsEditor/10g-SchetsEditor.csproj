@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawingObjects\DrawingObject.cs" />
+    <Compile Include="DrawingObjects\EllipseObject.cs" />
+    <Compile Include="DrawingObjects\LineObject.cs" />
+    <Compile Include="DrawingObjects\RectangleObject.cs" />
     <Compile Include="Hoofdscherm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +66,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tools.cs" />
+    <EmbeddedResource Include="Hoofdscherm.resx">
+      <DependentUpon>Hoofdscherm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,6 +79,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SchetsWin.resx">
+      <DependentUpon>SchetsWin.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -82,9 +92,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pen.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\gum.png" />
@@ -99,11 +106,16 @@
     <None Include="Resources\fillrect.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\text.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\circle.png" />
     <None Include="Resources\border-circle.png" />
+    <None Include="Resources\pen.png" />
+    <None Include="Resources\eraser.png" />
+    <None Include="Resources\ellipse.png" />
+    <None Include="Resources\text.png" />
+    <None Include="Resources\line.png" />
+    <None Include="Resources\filledrectangle.png" />
+    <None Include="Resources\rectangle.png" />
+    <None Include="Resources\filledellipse.png" />
     <Content Include="Veranderingen.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,1 +1,11 @@
-﻿
+﻿- Resources.resx
+	- Icoontjes vervangen door beter bijelkaar passende varianten en extra icoontjes voor de cirkeltools toegevoegd
+- Hoofdscherm.cs
+	- De namen engels gemaakt
+	- Open en opslaan menu items
+- SchetsWin.cs
+	- De namen engels gemaakt
+	- Volgorde van main menu buttons gefixt
+- Tools.cs
+	- De 2 cirkeltools toegevoegd
+	- De namen engels gemaakt

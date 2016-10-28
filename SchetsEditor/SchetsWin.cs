@@ -43,6 +43,7 @@ namespace SchetsEditor
 
         public SchetsWin()
         {
+            InitializeComponent();
             ISchetsTool[] deTools = { new PenTool()
                                     , new LijnTool()
                                     , new RechthoekTool()
@@ -105,7 +106,7 @@ namespace SchetsEditor
 
         private void maakToolMenu(ICollection<ISchetsTool> tools)
         {
-            ToolStripMenuItem menu = new ToolStripMenuItem("Tool");
+            ToolStripMenuItem menu = new ToolStripMenuItem("Tools") { MergeIndex = 1, MergeAction = MergeAction.Insert };
             foreach (ISchetsTool tool in tools)
             {
                 ToolStripItem item = new ToolStripMenuItem();
@@ -120,10 +121,10 @@ namespace SchetsEditor
 
         private void maakAktieMenu(String[] kleuren)
         {
-            ToolStripMenuItem menu = new ToolStripMenuItem("Aktie");
+            ToolStripMenuItem menu = new ToolStripMenuItem("Action") { MergeIndex = 2, MergeAction = MergeAction.Insert };
             menu.DropDownItems.Add("Clear", null, schetscontrol.Schoon);
-            menu.DropDownItems.Add("Roteer", null, schetscontrol.Roteer);
-            ToolStripMenuItem submenu = new ToolStripMenuItem("Kies kleur");
+            menu.DropDownItems.Add("Rotate", null, schetscontrol.Roteer);
+            ToolStripMenuItem submenu = new ToolStripMenuItem("Colors");
             foreach (string k in kleuren)
                 submenu.DropDownItems.Add(k, null, schetscontrol.VeranderKleurViaMenu);
             menu.DropDownItems.Add(submenu);
@@ -171,7 +172,7 @@ namespace SchetsEditor
             paneel.Controls.Add(b);
 
             l = new Label();
-            l.Text = "Penkleur:";
+            l.Text = "Pen Color:";
             l.Location = new Point(180, 3);
             l.AutoSize = true;
             paneel.Controls.Add(l);
@@ -183,6 +184,20 @@ namespace SchetsEditor
                 cbb.Items.Add(k);
             cbb.SelectedIndex = 0;
             paneel.Controls.Add(cbb);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SchetsWin));
+            this.SuspendLayout();
+            // 
+            // SchetsWin
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "SchetsWin";
+            this.ResumeLayout(false);
+
         }
     }
 }

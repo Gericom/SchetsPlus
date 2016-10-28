@@ -31,7 +31,7 @@ namespace SchetsEditor
 
     public class TekstTool : StartpuntTool
     {
-        public override string ToString() { return "tekst"; }
+        public override string ToString() { return "Text"; }
 
         public override void MuisDrag(SchetsControl s, Point p) { }
 
@@ -97,7 +97,7 @@ namespace SchetsEditor
 
     public class RechthoekTool : TweepuntTool
     {
-        public override string ToString() { return "kader"; }
+        public override string ToString() { return "Frame"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
@@ -107,7 +107,7 @@ namespace SchetsEditor
 
     public class VolRechthoekTool : RechthoekTool
     {
-        public override string ToString() { return "vlak"; }
+        public override string ToString() { return "Plane"; }
 
         public override void Compleet(Graphics g, Point p1, Point p2)
         {
@@ -117,7 +117,7 @@ namespace SchetsEditor
 
     public class CircleTool : TweepuntTool
     {
-        public override string ToString() { return "Circle"; }
+        public override string ToString() { return "Ellipse"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
@@ -127,7 +127,7 @@ namespace SchetsEditor
 
     public class FillCircle : CircleTool
     {
-        public override string ToString() { return "Full Circle"; }
+        public override string ToString() { return "FilledEllipse"; }
 
         public override void Compleet(Graphics g, Point p1, Point p2)
         {
@@ -138,7 +138,7 @@ namespace SchetsEditor
 
     public class LijnTool : TweepuntTool
     {
-        public override string ToString() { return "lijn"; }
+        public override string ToString() { return "Line"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
@@ -148,7 +148,7 @@ namespace SchetsEditor
 
     public class PenTool : LijnTool
     {
-        public override string ToString() { return "pen"; }
+        public override string ToString() { return "Pen"; }
 
         public override void MuisDrag(SchetsControl s, Point p)
         {
@@ -159,7 +159,7 @@ namespace SchetsEditor
 
     public class GumTool : PenTool
     {
-        public override string ToString() { return "gum"; }
+        public override string ToString() { return "Eraser"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {

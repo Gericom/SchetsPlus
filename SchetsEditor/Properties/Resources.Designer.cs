@@ -63,9 +63,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Circle {
+        internal static System.Drawing.Bitmap Ellipse {
             get {
-                object obj = ResourceManager.GetObject("Circle", resourceCulture);
+                object obj = ResourceManager.GetObject("Ellipse", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gum {
+        internal static System.Drawing.Bitmap Eraser {
             get {
-                object obj = ResourceManager.GetObject("gum", resourceCulture);
+                object obj = ResourceManager.GetObject("Eraser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap kader {
+        internal static System.Drawing.Bitmap FilledEllipse {
             get {
-                object obj = ResourceManager.GetObject("kader", resourceCulture);
+                object obj = ResourceManager.GetObject("FilledEllipse", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lijn {
+        internal static System.Drawing.Bitmap Frame {
             get {
-                object obj = ResourceManager.GetObject("lijn", resourceCulture);
+                object obj = ResourceManager.GetObject("Frame", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pen {
+        internal static System.Drawing.Bitmap Line {
             get {
-                object obj = ResourceManager.GetObject("pen", resourceCulture);
+                object obj = ResourceManager.GetObject("Line", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tekst {
+        internal static System.Drawing.Bitmap Pen {
             get {
-                object obj = ResourceManager.GetObject("tekst", resourceCulture);
+                object obj = ResourceManager.GetObject("Pen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,19 @@ namespace SchetsEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap vlak {
+        internal static System.Drawing.Bitmap Plane {
             get {
-                object obj = ResourceManager.GetObject("vlak", resourceCulture);
+                object obj = ResourceManager.GetObject("Plane", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Text {
+            get {
+                object obj = ResourceManager.GetObject("Text", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

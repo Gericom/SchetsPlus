@@ -117,29 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Ellipse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ellipse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Eraser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\eraser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FilledEllipse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\filledellipse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Frame" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rectangle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Line" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Plane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\filledrectangle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Text" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\text.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAA/Pz8LnV8qKV1fKjpPDtG/Tw7RuV1fKib/Pz8IwAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAt7rTabe60/pOVXP/aW2A/05Vc/88O0b/PDtG/zw7RvW3utNVAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAt7rTVjw7Rv5pbYD/jpvQ/46b0P+Om9D/dXyo/zw7Rv88O0b/PDtG+re6
+        0zoAAAAAAAAAAAAAAAAAAAAAAAAAAPz8/A6Om9BzaW2A53V8qP91fKj/aW2A/3V8qP9OVXP/PDtG/yIj
+        Kv9pbYC5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI6b0L6Om9D/dXyo/05Vc/9pbYD/TlVz/zw7
+        Rv88O0bt/Pz8JwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPz8/DK3utP9jpvQ/2ltgP88O0b/jpvQ/2lt
+        gP9OVXP/jpvQngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC3utOjjpvQ/7e60/+3utP/jpvQ/7e6
+        0/+Om9D/aW2A/2ltgNX8/PwGAAAAAAAAAAAAAAAAAAAAAAAAAAD8/PwBdXyouk5Vc/9OVXP/jpvQ/zw7
+        Rv9pbYD/TlVz/05Vc/88O0b/t7rTTgAAAAAAAAAAAAAAAAAAAAAAAAAAt7rTVzw7Rv+Om9D/t7rT/7e6
+        0/9OVXP/TlVz/05Vc/88O0b/IiMq/7e602UAAAAAAAAAAAAAAAAAAAAAAAAAAGltgLUiIyr/PDtG/7e6
+        0/+3utP/PDtG/2ltgP88O0b/IiMq/yIjKv+3utNXAAAAAAAAAAAAAAAAAAAAAAAAAABpbYCtPDtG/yIj
+        Kv9pbYD/dXyo/zw7Rv8iIyr/IiMq/yIjKv8iIyr/t7rTVQAAAAAAAAAAAAAAAAAAAAAAAAAAt7rTZDw7
+        Rv88O0b/PDtG/05Vc/88O0b/PDtG/zw7Rv88O0b/IiMq/7e601wAAAAAAAAAAAAAAAAAAAAAAAAAALe6
+        0088O0b/PDtG/zw7Rv88O0b/IiMq/yIjKv88O0b/PDtG/zw7Rvv8/PwnAAAAAAAAAAAAAAAAAAAAAAAA
+        AAD8/PwITlVz7iIjKv8iIyr/IiMq/yIjKv8iIyr/PDtG/zw7Rv+Om9CLAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAPz8/C5OVXPdPDtG/yIjKv8iIyr/IiMq/zw7Ru+Om9Bx/Pz8AQAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAt7rTRWltgMFpbYDNTlVz4GltgM38/PwiAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAA8B8AAOAPAADABwAAwAcAAPAHAADgDwAA4AcAAMAHAADABwAAwAcAAMAHAADABwAAwAcAAMAP
+        AADgDwAA8D8AAA==
+</value>
   </data>
 </root>

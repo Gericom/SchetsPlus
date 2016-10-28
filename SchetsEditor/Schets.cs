@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchetsEditor.DrawingObjects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -7,6 +8,7 @@ namespace SchetsEditor
     public class Schets
     {
         private Bitmap bitmap;
+        private List<DrawingObject> mDrawingObjectList = new List<DrawingObject>();
         
         public Schets()
         {
@@ -37,6 +39,7 @@ namespace SchetsEditor
         {
             Graphics gr = Graphics.FromImage(bitmap);
             gr.FillRectangle(Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
+            mDrawingObjectList.Clear();
         }
         public void Roteer()
         {
