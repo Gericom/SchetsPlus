@@ -16,10 +16,7 @@ namespace SchetsEditor.DrawingObjects
             if (Points == null || Points.Length < 2)
                 return;
             var pen = new Pen(new SolidBrush(colorOverride), 3);
-            for (int i = 0; i < Points.Length - 1; i++)
-            {
-                g.DrawLine(pen, Points[i], Points[i + 1]);
-            }
+            g.DrawCurve(pen, Points);
         }
     }
 }

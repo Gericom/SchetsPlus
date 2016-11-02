@@ -152,9 +152,9 @@ namespace SchetsEditor
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
-            ( (EllipseObject) mDrawingObject ).Position = r.Location;
-            ( (EllipseObject) mDrawingObject ).Size = r.Size;
-            if ( mDragging )
+            ((EllipseObject)mDrawingObject).Position = r.Location;
+            ((EllipseObject)mDrawingObject).Size = r.Size;
+            if (mDragging)
                 mDrawingObject.Draw(g, Color.Gray);
             else
                 mDrawingObject.Draw(g);
@@ -169,9 +169,9 @@ namespace SchetsEditor
         public override void Compleet(Graphics g, Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
-            ( (EllipseObject) mDrawingObject ).Position = r.Location;
-            ( (EllipseObject) mDrawingObject ).Size = r.Size;
-            ( (EllipseObject) mDrawingObject ).Filled = true;
+            ((EllipseObject)mDrawingObject).Position = r.Location;
+            ((EllipseObject)mDrawingObject).Size = r.Size;
+            ((EllipseObject)mDrawingObject).Filled = true;
             mDrawingObject.Draw(g);
             //g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
@@ -190,8 +190,8 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            ( (LineObject) mDrawingObject ).Points = new Point[] { p1, p2 };
-            if ( mDragging )
+            ((LineObject)mDrawingObject).Points = new Point[] { p1, p2 };
+            if (mDragging)
                 mDrawingObject.Draw(g, Color.Gray);
             else
                 mDrawingObject.Draw(g);
@@ -222,8 +222,9 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            ( (LineObject) mDrawingObject ).Points = mPoints.ToArray();
-                mDrawingObject.Draw(g);
+            //HELP FIXME!!!!
+            ((LineObject)mDrawingObject).Points = mPoints.ToArray();
+            mDrawingObject.Draw(g);
         }
 
     }
