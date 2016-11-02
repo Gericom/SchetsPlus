@@ -25,6 +25,7 @@ namespace SchetsEditor
             this.Paint += this.teken;
             this.Resize += this.veranderAfmeting;
             this.veranderAfmeting(null, null);
+            DoubleBuffered = true;
         }
         protected override void OnPaintBackground(PaintEventArgs e)
         {
@@ -42,6 +43,8 @@ namespace SchetsEditor
         {
             Graphics g = schets.BitmapGraphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
             return g;
         }
         public void Schoon(object o, EventArgs ea)

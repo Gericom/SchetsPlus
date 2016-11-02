@@ -7,20 +7,14 @@ using System.Threading.Tasks;
 
 namespace SchetsEditor.DrawingObjects
 {
-    public class EllipseObject : DrawingObject
+    public class EllipseObject : ShapeObject
     {
-        public Point Position { get; set; }
-        public Size Size { get; set; }
-        public Color Color { get; set; }
-        public bool Filled { get; set; }
-
-        public override void Draw(Graphics g, bool picking, Color pickingColor)
+        public override void Draw(Graphics g, Color colorOverride)
         {
-            Color color = (picking ? pickingColor : Color);
             if (Filled)
-                g.FillEllipse(new SolidBrush(color), new Rectangle(Position, Size));
+                g.FillEllipse(new SolidBrush(colorOverride), new Rectangle(Position, Size));
             else
-                g.DrawEllipse(new Pen(new SolidBrush(color), 3), new Rectangle(Position, Size));
+                g.DrawEllipse(new Pen(new SolidBrush(colorOverride), 2), new Rectangle(Position, Size));
         }
     }
 }

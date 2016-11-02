@@ -53,6 +53,7 @@
     <Compile Include="DrawingObjects\EllipseObject.cs" />
     <Compile Include="DrawingObjects\LineObject.cs" />
     <Compile Include="DrawingObjects\RectangleObject.cs" />
+    <Compile Include="DrawingObjects\ShapeObject.cs" />
     <Compile Include="Hoofdscherm.cs">
       <SubType>Form</SubType>
     </Compile>

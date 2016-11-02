@@ -100,7 +100,7 @@ namespace SchetsEditor
         {
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
-            menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
+            menu.DropDownItems.Add("Close", null, this.afsluiten);
             menuStrip.Items.Add(menu);
         }
 

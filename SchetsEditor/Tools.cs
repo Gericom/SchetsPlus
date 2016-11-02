@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchetsEditor.DrawingObjects;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -16,13 +17,17 @@ namespace SchetsEditor
     {
         protected Point startpunt;
         protected Brush kwast;
+        protected DrawingObject mDrawingObject;
+        protected bool mDragging = false;
 
         public virtual void MuisVast(SchetsControl s, Point p)
         {
             startpunt = p;
+            mDragging = true;
         }
         public virtual void MuisLos(SchetsControl s, Point p)
         {
+            mDragging = false;
             kwast = new SolidBrush(s.PenKleur);
         }
         public abstract void MuisDrag(SchetsControl s, Point p);
@@ -99,9 +104,22 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Frame"; }
 
+        public override void MuisVast(SchetsControl s, Point p)
+        {
+            base.MuisVast(s, p);
+            mDrawingObject = new RectangleObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+        }
+
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
+            Rectangle r = Punten2Rechthoek(p1, p2);
+            ((RectangleObject)mDrawingObject).Position = r.Location;
+            ((RectangleObject)mDrawingObject).Size = r.Size;
+            if (mDragging)
+                mDrawingObject.Draw(g, Color.Gray);
+            else
+                mDrawingObject.Draw(g);
+            //g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -111,7 +129,12 @@ namespace SchetsEditor
 
         public override void Compleet(Graphics g, Point p1, Point p2)
         {
-            g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+            Rectangle r = Punten2Rechthoek(p1, p2);
+            ((RectangleObject)mDrawingObject).Position = r.Location;
+            ((RectangleObject)mDrawingObject).Size = r.Size;
+            ((RectangleObject)mDrawingObject).Filled = true;
+            mDrawingObject.Draw(g);
+            //g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
