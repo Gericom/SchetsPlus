@@ -5,12 +5,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace SchetsEditor
-{
+{   
     public interface ISchetsTool
     {
-        void MuisVast(SchetsControl s, Point p);
-        void MuisDrag(SchetsControl s, Point p);
-        void MuisLos(SchetsControl s, Point p);
+        void MouseDown(SchetsControl s, Point p);
+        void MouseDrag(SchetsControl s, Point p);
+        void MouseUp(SchetsControl s, Point p);
         void Letter(SchetsControl s, char c);
     }
 
@@ -21,17 +21,17 @@ namespace SchetsEditor
         protected DrawingObject mDrawingObject;
         protected bool mDragging = false;
 
-        public virtual void MuisVast(SchetsControl s, Point p)
+        public virtual void MouseDown(SchetsControl s, Point p)
         {
             startpunt = p;
             mDragging = true;
         }
-        public virtual void MuisLos(SchetsControl s, Point p)
+        public virtual void MouseUp(SchetsControl s, Point p)
         {
             mDragging = false;
             kwast = new SolidBrush(s.PenKleur);
         }
-        public abstract void MuisDrag(SchetsControl s, Point p);
+        public abstract void MouseDrag(SchetsControl s, Point p);
         public abstract void Letter(SchetsControl s, char c);
     }
 
@@ -39,14 +39,14 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Text"; }
 
-        public override void MuisDrag(SchetsControl s, Point p) { }
+        public override void MouseDrag(SchetsControl s, Point p) { }
 
         public override void Letter(SchetsControl s, char c)
         {
             if (c >= 32)
             {
                 Graphics gr = s.MaakBitmapGraphics();
-                Font font = new Font("Tahoma", 40);
+                Font font = new Font("Calibri", 40);
                 string tekst = c.ToString();
                 SizeF sz =
                 gr.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
@@ -74,19 +74,19 @@ namespace SchetsEditor
             pen.EndCap = LineCap.Round;
             return pen;
         }
-        public override void MuisVast(SchetsControl s, Point p)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MuisVast(s, p);
+            base.MouseDown(s, p);
             kwast = Brushes.Gray;
         }
-        public override void MuisDrag(SchetsControl s, Point p)
+        public override void MouseDrag(SchetsControl s, Point p)
         {
             s.Refresh();
             this.Bezig(s.CreateGraphics(), this.startpunt, p);
         }
-        public override void MuisLos(SchetsControl s, Point p)
+        public override void MouseUp(SchetsControl s, Point p)
         {
-            base.MuisLos(s, p);
+            base.MouseUp(s, p);
             this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
             s.Invalidate();
         }
@@ -105,9 +105,9 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Frame"; }
 
-        public override void MuisVast(SchetsControl s, Point p)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MuisVast(s, p);
+            base.MouseDown(s, p);
             mDrawingObject = new RectangleObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
         }
 
@@ -116,9 +116,9 @@ namespace SchetsEditor
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((RectangleObject)mDrawingObject).Position = r.Location;
             ((RectangleObject)mDrawingObject).Size = r.Size;
-            if (mDragging)
+            /*if (mDragging)
                 mDrawingObject.Draw(g, Color.Gray);
-            else
+            else*/
                 mDrawingObject.Draw(g);
             //g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
@@ -139,13 +139,13 @@ namespace SchetsEditor
         }
     }
 
-    public class CircleTool : TweepuntTool
+    public class EllipseTool : TweepuntTool
     {
         public override string ToString() { return "Ellipse"; }
 
-        public override void MuisVast(SchetsControl s, Point p)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MuisVast(s, p);
+            base.MouseDown(s, p);
             mDrawingObject = new EllipseObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
         }
 
@@ -154,15 +154,15 @@ namespace SchetsEditor
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((EllipseObject)mDrawingObject).Position = r.Location;
             ((EllipseObject)mDrawingObject).Size = r.Size;
-            if (mDragging)
+            /*if (mDragging)
                 mDrawingObject.Draw(g, Color.Gray);
-            else
+            else*/
                 mDrawingObject.Draw(g);
             //g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
-    public class FillCircle : CircleTool
+    public class FillEllipse : EllipseTool
     {
         public override string ToString() { return "FilledEllipse"; }
 
@@ -182,18 +182,18 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Line"; }
 
-        public override void MuisVast(SchetsControl s, Point p)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MuisVast(s, p);
+            base.MouseDown(s, p);
             mDrawingObject = new LineObject() { Color = s.PenKleur };
         }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
             ((LineObject)mDrawingObject).Points = new Point[] { p1, p2 };
-            if (mDragging)
+            /*if (mDragging)
                 mDrawingObject.Draw(g, Color.Gray);
-            else
+            else*/
                 mDrawingObject.Draw(g);
             //g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
         }
@@ -203,15 +203,15 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Pen"; }
 
-        public override void MuisVast(SchetsControl s, Point p)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MuisVast(s, p);
+            base.MouseDown(s, p);
             mPoints = new List<Point>();
         }
 
         private List<Point> mPoints;
 
-        public override void MuisDrag(SchetsControl s, Point p)
+        public override void MouseDrag(SchetsControl s, Point p)
         {
             mPoints.Add(p);
             Bezig(s.MaakBitmapGraphics(), this.startpunt, p);

@@ -68,5 +68,17 @@ namespace SchetsEditor
             string kleurNaam = ((ToolStripMenuItem)obj).Text;
             penkleur = Color.FromName(kleurNaam);
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // SchetsControl
+            // 
+            this.DoubleBuffered = true;
+            this.Name = "SchetsControl";
+            this.ResumeLayout(false);
+
+        }
     }
 }

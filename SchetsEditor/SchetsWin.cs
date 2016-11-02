@@ -11,7 +11,7 @@ namespace SchetsEditor
     {
         MenuStrip menuStrip;
         SchetsControl schetscontrol;
-        ISchetsTool huidigeTool;
+        ISchetsTool currentTool;
         Panel paneel;
         bool vast;
         ResourceManager resourcemanager
@@ -28,12 +28,12 @@ namespace SchetsEditor
 
         private void klikToolMenu(object obj, EventArgs ea)
         {
-            this.huidigeTool = (ISchetsTool)((ToolStripMenuItem)obj).Tag;
+            this.currentTool = (ISchetsTool)((ToolStripMenuItem)obj).Tag;
         }
 
         private void klikToolButton(object obj, EventArgs ea)
         {
-            this.huidigeTool = (ISchetsTool)((RadioButton)obj).Tag;
+            this.currentTool = (ISchetsTool)((RadioButton)obj).Tag;
         }
 
         private void afsluiten(object obj, EventArgs ea)
@@ -44,43 +44,45 @@ namespace SchetsEditor
         public SchetsWin()
         {
             InitializeComponent();
-            ISchetsTool[] deTools = { new PenTool()
+            ISchetsTool[] mTools = { new PenTool()
                                     , new LijnTool()
                                     , new RechthoekTool()
                                     , new VolRechthoekTool()
-                                    , new CircleTool()
-                                    , new FillCircle()
+                                    , new EllipseTool()
+                                    , new FillEllipse()
                                     , new TekstTool()
                                     , new GumTool()
                                     };
-            String[] deKleuren = { "Black", "Red", "Green", "Blue"
-                                 , "Yellow", "Magenta", "Cyan"
+
+            //we can add the colour palette to this or extend the color array?
+            String[] mColours = { "Black", "Red", "Green", "Blue"
+                                 , "Yellow", "Magenta", "Cyan","Brown","Teal" 
                                  };
 
             this.ClientSize = new Size(700, 500);
-            huidigeTool = deTools[0];
+            currentTool = mTools[0];
 
             schetscontrol = new SchetsControl();
             schetscontrol.Location = new Point(64, 10);
             schetscontrol.MouseDown += (object o, MouseEventArgs mea) =>
                                        {
                                            vast = true;
-                                           huidigeTool.MuisVast(schetscontrol, mea.Location);
+                                           currentTool.MouseDown(schetscontrol, mea.Location);
                                        };
             schetscontrol.MouseMove += (object o, MouseEventArgs mea) =>
                                        {
                                            if (vast)
-                                               huidigeTool.MuisDrag(schetscontrol, mea.Location);
+                                               currentTool.MouseDrag(schetscontrol, mea.Location);
                                        };
             schetscontrol.MouseUp += (object o, MouseEventArgs mea) =>
                                      {
                                          if (vast)
-                                             huidigeTool.MuisLos(schetscontrol, mea.Location);
+                                             currentTool.MouseUp(schetscontrol, mea.Location);
                                          vast = false;
                                      };
             schetscontrol.KeyPress += (object o, KeyPressEventArgs kpea) =>
                                       {
-                                          huidigeTool.Letter(schetscontrol, kpea.KeyChar);
+                                          currentTool.Letter(schetscontrol, kpea.KeyChar);
                                       };
             this.Controls.Add(schetscontrol);
 
@@ -88,10 +90,10 @@ namespace SchetsEditor
             menuStrip.Visible = false;
             this.Controls.Add(menuStrip);
             this.maakFileMenu();
-            this.maakToolMenu(deTools);
-            this.maakAktieMenu(deKleuren);
-            this.maakToolButtons(deTools);
-            this.maakAktieButtons(deKleuren);
+            this.maakToolMenu(mTools);
+            this.maakAktieMenu(mColours);
+            this.maakToolButtons(mTools);
+            this.maakAktieButtons(mColours);
             this.Resize += this.veranderAfmeting;
             this.veranderAfmeting(null, null);
         }
@@ -194,6 +196,7 @@ namespace SchetsEditor
             // SchetsWin
             // 
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SchetsWin";
             this.ResumeLayout(false);
