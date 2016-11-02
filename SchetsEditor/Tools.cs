@@ -1,5 +1,6 @@
 ﻿using SchetsEditor.DrawingObjects;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -202,13 +203,30 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Pen"; }
 
+        public override void MuisVast(SchetsControl s, Point p)
+        {
+            base.MuisVast(s, p);
+            mPoints = new List<Point>();
+        }
+
+        private List<Point> mPoints;
+
         public override void MuisDrag(SchetsControl s, Point p)
         {
-            this.MuisLos(s, p);
-            this.MuisVast(s, p);
+            mPoints.Add(p);
+            Bezig(s.MaakBitmapGraphics(), this.startpunt, p);
+            s.Invalidate();
+            //this.MuisLos(s, p);
+            //this.MuisVast(s, p);
         }
-    }
 
+        public override void Bezig(Graphics g, Point p1, Point p2)
+        {
+            ( (LineObject) mDrawingObject ).Points = mPoints.ToArray();
+                mDrawingObject.Draw(g);
+        }
+
+    }
     public class GumTool : PenTool
     {
         public override string ToString() { return "Eraser"; }
