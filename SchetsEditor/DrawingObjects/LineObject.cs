@@ -13,7 +13,7 @@ namespace SchetsEditor.DrawingObjects
 
         public override void Draw(Graphics g, Color colorOverride)
         {
-            if (Points.Length < 2)
+            if (Points == null || Points.Length < 2)
                 return;
             var pen = new Pen(new SolidBrush(colorOverride), 3);
             for (int i = 0; i < Points.Length - 1; i++)

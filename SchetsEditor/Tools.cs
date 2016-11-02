@@ -142,9 +142,22 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Ellipse"; }
 
+        public override void MuisVast(SchetsControl s, Point p)
+        {
+            base.MuisVast(s, p);
+            mDrawingObject = new EllipseObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+        }
+
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
+            Rectangle r = Punten2Rechthoek(p1, p2);
+            ( (EllipseObject) mDrawingObject ).Position = r.Location;
+            ( (EllipseObject) mDrawingObject ).Size = r.Size;
+            if ( mDragging )
+                mDrawingObject.Draw(g, Color.Gray);
+            else
+                mDrawingObject.Draw(g);
+            //g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -154,7 +167,12 @@ namespace SchetsEditor
 
         public override void Compleet(Graphics g, Point p1, Point p2)
         {
-            g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+            Rectangle r = Punten2Rechthoek(p1, p2);
+            ( (EllipseObject) mDrawingObject ).Position = r.Location;
+            ( (EllipseObject) mDrawingObject ).Size = r.Size;
+            ( (EllipseObject) mDrawingObject ).Filled = true;
+            mDrawingObject.Draw(g);
+            //g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -163,9 +181,20 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Line"; }
 
+        public override void MuisVast(SchetsControl s, Point p)
+        {
+            base.MuisVast(s, p);
+            mDrawingObject = new LineObject() { Color = s.PenKleur };
+        }
+
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
+            ( (LineObject) mDrawingObject ).Points = new Point[] { p1, p2 };
+            if ( mDragging )
+                mDrawingObject.Draw(g, Color.Gray);
+            else
+                mDrawingObject.Draw(g);
+            //g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
         }
     }
 
