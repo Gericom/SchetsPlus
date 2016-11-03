@@ -8,11 +8,11 @@ namespace SchetsEditor
     public class SchetsControl : UserControl
     {
         private Schets schets;
-        private Color penkleur;
+        private Color pencolour;
 
-        public Color PenKleur
+        public Color penColour
         {
-            get { return penkleur; }
+            get { return pencolour; }
         }
         public Schets Schets
         {
@@ -47,26 +47,26 @@ namespace SchetsEditor
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
             return g;
         }
-        public void Schoon(object o, EventArgs ea)
+        public void Clear(object o, EventArgs ea)
         {
-            schets.Schoon();
+            schets.Clear();
             this.Invalidate();
         }
-        public void Roteer(object o, EventArgs ea)
+        public void Rotate(object o, EventArgs ea)
         {
             schets.VeranderAfmeting(new Size(this.ClientSize.Height, this.ClientSize.Width));
-            schets.Roteer();
+            schets.Rotate();
             this.Invalidate();
         }
         public void VeranderKleur(object obj, EventArgs ea)
         {
-            string kleurNaam = ((ComboBox)obj).Text;
-            penkleur = Color.FromName(kleurNaam);
+            string colourName = ((ComboBox)obj).Text;
+            pencolour = Color.FromName(colourName);
         }
         public void VeranderKleurViaMenu(object obj, EventArgs ea)
         {
-            string kleurNaam = ((ToolStripMenuItem)obj).Text;
-            penkleur = Color.FromName(kleurNaam);
+            string colourName = ((ToolStripMenuItem)obj).Text;
+            pencolour = Color.FromName(colourName);
         }
 
         private void InitializeComponent()

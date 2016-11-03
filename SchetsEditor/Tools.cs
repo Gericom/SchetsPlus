@@ -29,7 +29,7 @@ namespace SchetsEditor
         public virtual void MouseUp(SchetsControl s, Point p)
         {
             mDragging = false;
-            kwast = new SolidBrush(s.PenKleur);
+            kwast = new SolidBrush(s.penColour);
         }
         public abstract void MouseDrag(SchetsControl s, Point p);
         public abstract void Letter(SchetsControl s, char c);
@@ -108,7 +108,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new RectangleObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new RectangleObject() { Color = s.penColour, Filled = false, Position = p, Size = new Size(0, 0) };
         }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
@@ -146,7 +146,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new EllipseObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new EllipseObject() { Color = s.penColour, Filled = false, Position = p, Size = new Size(0, 0) };
         }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
@@ -185,7 +185,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new LineObject() { Color = s.PenKleur };
+            mDrawingObject = new LineObject() { Color = s.penColour };
         }
 
         public override void Bezig(Graphics g, Point p1, Point p2)

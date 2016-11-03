@@ -35,13 +35,13 @@ namespace SchetsEditor
         {
             gr.DrawImage(bitmap, 0, 0);
         }
-        public void Schoon()
+        public void Clear()
         {
             Graphics gr = Graphics.FromImage(bitmap);
             gr.Clear(Color.White);
             mDrawingObjectList.Clear();
         }
-        public void Roteer()
+        public void Rotate()
         {
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
