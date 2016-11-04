@@ -44,7 +44,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new TextObject() { Position = p, Text = "", Color = s.PenKleur };
+            mDrawingObject = new TextObject() { Position = p, Text = "", Color = s.penColour };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -105,7 +105,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new RectangleObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new RectangleObject() { Color = s.penColour, Filled = false, Position = p, Size = new Size(0, 0) };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -137,7 +137,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new EllipseObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new EllipseObject() { Color = s.penColour, Filled = false, Position = p, Size = new Size(0, 0) };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -170,7 +170,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new LineObject() { Color = s.PenKleur };
+            mDrawingObject = new LineObject() { Color = s.penColour };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 

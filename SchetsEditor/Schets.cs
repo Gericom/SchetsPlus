@@ -36,11 +36,11 @@ namespace SchetsEditor
             if (mWorkingObject != null)
                 mWorkingObject.Draw(gr);
         }
-        public void Schoon()
+        public void Clear()
         {
             mDrawingObjectList.Clear();
         }
-        public void Roteer()
+        public void Rotate()
         {
             //bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
