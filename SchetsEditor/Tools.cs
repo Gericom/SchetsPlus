@@ -17,7 +17,6 @@ namespace SchetsEditor
     public abstract class StartpuntTool : ISchetsTool
     {
         protected Point startpunt;
-        protected Brush kwast;
         protected DrawingObject mDrawingObject;
         protected bool mDragging = false;
 
@@ -29,10 +28,11 @@ namespace SchetsEditor
         public virtual void MouseUp(SchetsControl s, Point p)
         {
             mDragging = false;
-            kwast = new SolidBrush(s.PenKleur);
+            if(mDrawingObject != null)
+                s.Schets.EndAddObject();
         }
         public abstract void MouseDrag(SchetsControl s, Point p);
-        public abstract void Letter(SchetsControl s, char c);
+        public virtual void Letter(SchetsControl s, char c) { }
     }
 
     public class TekstTool : StartpuntTool
@@ -41,19 +41,18 @@ namespace SchetsEditor
 
         public override void MouseDrag(SchetsControl s, Point p) { }
 
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+            mDrawingObject = new TextObject() { Position = p, Text = "", Color = s.PenKleur };
+            s.Schets.BeginAddObject(mDrawingObject);
+        }
+
         public override void Letter(SchetsControl s, char c)
         {
             if (c >= 32)
             {
-                Graphics gr = s.MaakBitmapGraphics();
-                Font font = new Font("Calibri", 40);
-                string tekst = c.ToString();
-                SizeF sz =
-                gr.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
-                gr.DrawString(tekst, font, kwast,
-                                              this.startpunt, StringFormat.GenericTypographic);
-                // gr.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);
-                startpunt.X += (int)sz.Width;
+                ((TextObject)mDrawingObject).Text += c;
                 s.Invalidate();
             }
         }
@@ -77,27 +76,25 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            kwast = Brushes.Gray;
         }
         public override void MouseDrag(SchetsControl s, Point p)
         {
-            s.Refresh();
-            this.Bezig(s.CreateGraphics(), this.startpunt, p);
+            this.Bezig(this.startpunt, p);
+            s.Invalidate();
         }
         public override void MouseUp(SchetsControl s, Point p)
         {
             base.MouseUp(s, p);
-            this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
+            this.Compleet(this.startpunt, p);
             s.Invalidate();
+            mDrawingObject = null;
         }
-        public override void Letter(SchetsControl s, char c)
-        {
-        }
-        public abstract void Bezig(Graphics g, Point p1, Point p2);
 
-        public virtual void Compleet(Graphics g, Point p1, Point p2)
+        public abstract void Bezig(Point p1, Point p2);
+
+        public virtual void Compleet(Point p1, Point p2)
         {
-            this.Bezig(g, p1, p2);
+            this.Bezig(p1, p2);
         }
     }
 
@@ -109,18 +106,14 @@ namespace SchetsEditor
         {
             base.MouseDown(s, p);
             mDrawingObject = new RectangleObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            s.Schets.BeginAddObject(mDrawingObject);
         }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((RectangleObject)mDrawingObject).Position = r.Location;
             ((RectangleObject)mDrawingObject).Size = r.Size;
-            /*if (mDragging)
-                mDrawingObject.Draw(g, Color.Gray);
-            else*/
-                mDrawingObject.Draw(g);
-            //g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -128,14 +121,12 @@ namespace SchetsEditor
     {
         public override string ToString() { return "Plane"; }
 
-        public override void Compleet(Graphics g, Point p1, Point p2)
+        public override void Compleet(Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((RectangleObject)mDrawingObject).Position = r.Location;
             ((RectangleObject)mDrawingObject).Size = r.Size;
             ((RectangleObject)mDrawingObject).Filled = true;
-            mDrawingObject.Draw(g);
-            //g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -147,18 +138,14 @@ namespace SchetsEditor
         {
             base.MouseDown(s, p);
             mDrawingObject = new EllipseObject() { Color = s.PenKleur, Filled = false, Position = p, Size = new Size(0, 0) };
+            s.Schets.BeginAddObject(mDrawingObject);
         }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((EllipseObject)mDrawingObject).Position = r.Location;
             ((EllipseObject)mDrawingObject).Size = r.Size;
-            /*if (mDragging)
-                mDrawingObject.Draw(g, Color.Gray);
-            else*/
-                mDrawingObject.Draw(g);
-            //g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -166,14 +153,12 @@ namespace SchetsEditor
     {
         public override string ToString() { return "FilledEllipse"; }
 
-        public override void Compleet(Graphics g, Point p1, Point p2)
+        public override void Compleet(Point p1, Point p2)
         {
             Rectangle r = Punten2Rechthoek(p1, p2);
             ((EllipseObject)mDrawingObject).Position = r.Location;
             ((EllipseObject)mDrawingObject).Size = r.Size;
             ((EllipseObject)mDrawingObject).Filled = true;
-            mDrawingObject.Draw(g);
-            //g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -186,16 +171,12 @@ namespace SchetsEditor
         {
             base.MouseDown(s, p);
             mDrawingObject = new LineObject() { Color = s.PenKleur };
+            s.Schets.BeginAddObject(mDrawingObject);
         }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(Point p1, Point p2)
         {
             ((LineObject)mDrawingObject).Points = new Point[] { p1, p2 };
-            /*if (mDragging)
-                mDrawingObject.Draw(g, Color.Gray);
-            else*/
-                mDrawingObject.Draw(g);
-            //g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
         }
     }
 
@@ -211,30 +192,34 @@ namespace SchetsEditor
 
         private List<Point> mPoints;
 
-        public override void MouseDrag(SchetsControl s, Point p)
+        public override void Bezig(Point p1, Point p2)
         {
-            mPoints.Add(p);
-            Bezig(s.MaakBitmapGraphics(), this.startpunt, p);
-            s.Invalidate();
-            //this.MuisLos(s, p);
-            //this.MuisVast(s, p);
-        }
-
-        public override void Bezig(Graphics g, Point p1, Point p2)
-        {
+            mPoints.Add(p2);
             //HELP FIXME!!!!
             ((LineObject)mDrawingObject).Points = mPoints.ToArray();
-            mDrawingObject.Draw(g);
         }
 
     }
-    public class GumTool : PenTool
+    public class GumTool : StartpuntTool
     {
         public override string ToString() { return "Eraser"; }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void MouseDown(SchetsControl s, Point p)
         {
-            g.DrawLine(MaakPen(Brushes.White, 7), p1, p2);
+            base.MouseDown(s, p);
+            
+        }
+        public override void MouseDrag(SchetsControl s, Point p)
+        {
+            
+        }
+        public override void MouseUp(SchetsControl s, Point p)
+        {
+            base.MouseUp(s, p);
+            var obj = s.Schets.FindObjectByPoint(p);
+            if (obj != null)
+                s.Schets.RemoveObject(obj);
+            s.Invalidate();
         }
     }
 }

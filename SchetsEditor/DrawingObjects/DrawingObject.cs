@@ -9,13 +9,11 @@ namespace SchetsEditor.DrawingObjects
 {
     public abstract class DrawingObject
     {
-        public Color Color { get; set; }
-
-        public void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
-            Draw(g, Color);
+            Draw(g, Color.Black);
         }
 
-        public abstract void Draw(Graphics g, Color colorOverride);
+        public abstract void Draw(Graphics g, Color colorOverride, bool picking = false);
     }
 }

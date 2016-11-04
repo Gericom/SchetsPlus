@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
+using SchetsEditor.DrawingObjects;
 
 namespace SchetsEditor
 {
@@ -19,6 +20,8 @@ namespace SchetsEditor
                                  , Assembly.GetExecutingAssembly()
                                  );
 
+        Dictionary<ISchetsTool, RadioButton> mRadioButtons;
+
         private void veranderAfmeting(object o, EventArgs ea)
         {
             schetscontrol.Size = new Size(this.ClientSize.Width - 70
@@ -28,7 +31,9 @@ namespace SchetsEditor
 
         private void klikToolMenu(object obj, EventArgs ea)
         {
-            this.currentTool = (ISchetsTool)((ToolStripMenuItem)obj).Tag;
+            var tool = (ISchetsTool)((ToolStripMenuItem)obj).Tag;
+            this.currentTool = tool;
+            mRadioButtons[tool].Select();
         }
 
         private void klikToolButton(object obj, EventArgs ea)
@@ -98,12 +103,54 @@ namespace SchetsEditor
             this.veranderAfmeting(null, null);
         }
 
+        public void LoadBitmap(Bitmap b)
+        {
+            schetscontrol.Schets.VeranderAfmeting(b.Size);
+            schetscontrol.Schets.BeginAddObject(new BitmapObject(b, false));
+            schetscontrol.Schets.EndAddObject();
+        }
+
         private void maakFileMenu()
         {
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
-            menu.DropDownItems.Add("Close", null, this.afsluiten);
+            var it = menu.DropDownItems.Add("Save", null, Save);
+            it.MergeIndex = 4;
+            it.MergeAction = MergeAction.Insert;
+            //it = menu.DropDownItems.Add("Save As");
+            //it.MergeIndex = 5;
+            //it.MergeAction = MergeAction.Insert;
+            it = menu.DropDownItems.Add("-");
+            it.MergeIndex = 5;
+            it.MergeAction = MergeAction.Insert;
+            it = menu.DropDownItems.Add("Close", null, this.afsluiten);
+            it.MergeIndex = 6;
+            it.MergeAction = MergeAction.Insert;
+            it = menu.DropDownItems.Add("-");
+            it.MergeIndex = 7;
+            it.MergeAction = MergeAction.Insert;
             menuStrip.Items.Add(menu);
+        }
+
+        private void Save(object o, EventArgs e)
+        {
+            SaveFileDialog f = new SaveFileDialog();
+            f.Filter = "PNG Images (*.png)|*.png|JPEG Images (*.jpg)|*.jpg|BMP Images (*.bmp)|*.bmp";
+            if (f.ShowDialog() == DialogResult.OK && f.FileName.Length > 0)
+            {
+                switch (f.FilterIndex)
+                {
+                    case 1:
+                        schetscontrol.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    case 2:
+                        schetscontrol.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        schetscontrol.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                }
+            }
         }
 
         private void maakToolMenu(ICollection<ISchetsTool> tools)
@@ -135,6 +182,7 @@ namespace SchetsEditor
 
         private void maakToolButtons(ICollection<ISchetsTool> tools)
         {
+            mRadioButtons = new Dictionary<ISchetsTool, RadioButton>();
             int t = 0;
             foreach (ISchetsTool tool in tools)
             {
@@ -149,6 +197,7 @@ namespace SchetsEditor
                 b.ImageAlign = ContentAlignment.BottomCenter;
                 b.Click += this.klikToolButton;
                 this.Controls.Add(b);
+                mRadioButtons.Add(tool, b);
                 if (t == 0) b.Select();
                 t++;
             }

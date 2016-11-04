@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace SchetsEditor.DrawingObjects
 {
-    public abstract class ShapeObject : VectorObject
+    public abstract class VectorObject : DrawingObject
     {
-        public Point Position { get; set; }
-        public Size Size { get; set; }
-        public bool Filled { get; set; }
+        public Color Color { get; set; }
+
+        public override void Draw(Graphics g)
+        {
+            Draw(g, Color);
+        }
     }
 }

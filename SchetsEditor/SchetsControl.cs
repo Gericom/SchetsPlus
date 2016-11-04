@@ -39,14 +39,7 @@ namespace SchetsEditor
             schets.VeranderAfmeting(this.ClientSize);
             this.Invalidate();
         }
-        public Graphics MaakBitmapGraphics()
-        {
-            Graphics g = schets.BitmapGraphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            return g;
-        }
+
         public void Schoon(object o, EventArgs ea)
         {
             schets.Schoon();
@@ -54,7 +47,6 @@ namespace SchetsEditor
         }
         public void Roteer(object o, EventArgs ea)
         {
-            schets.VeranderAfmeting(new Size(this.ClientSize.Height, this.ClientSize.Width));
             schets.Roteer();
             this.Invalidate();
         }

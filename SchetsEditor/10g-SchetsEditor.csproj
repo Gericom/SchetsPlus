@@ -49,11 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawingObjects\BitmapObject.cs" />
     <Compile Include="DrawingObjects\DrawingObject.cs" />
     <Compile Include="DrawingObjects\EllipseObject.cs" />
     <Compile Include="DrawingObjects\LineObject.cs" />
     <Compile Include="DrawingObjects\RectangleObject.cs" />
     <Compile Include="DrawingObjects\ShapeObject.cs" />
+    <Compile Include="DrawingObjects\TextObject.cs" />
+    <Compile Include="DrawingObjects\VectorObject.cs" />
     <Compile Include="Hoofdscherm.cs">
       <SubType>Form</SubType>
     </Compile>
