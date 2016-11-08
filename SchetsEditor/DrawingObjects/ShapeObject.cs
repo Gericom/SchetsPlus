@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,24 @@ namespace SchetsEditor.DrawingObjects
         public Point Position { get; set; }
         public Size Size { get; set; }
         public bool Filled { get; set; }
+
+        public ShapeObject() { }
+        public ShapeObject(BinaryReader reader)
+            : base(reader)
+        {
+            Position = new Point(reader.ReadInt32(), reader.ReadInt32());
+            Size = new Size(reader.ReadInt32(), reader.ReadInt32());
+            Filled = reader.ReadByte() == 1;
+        }
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            writer.Write(Position.X);
+            writer.Write(Position.Y);
+            writer.Write(Size.Width);
+            writer.Write(Size.Height);
+            writer.Write((byte)(Filled ? 1 : 0));
+        }
     }
 }

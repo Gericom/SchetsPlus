@@ -36,11 +36,14 @@ namespace SchetsEditor
         private void Open(object sender, EventArgs e)
         {
             OpenFileDialog f = new OpenFileDialog();
-            f.Filter = "Images (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp";
+            f.Filter = "Images (*.sppp;*.png;*.jpg;*.bmp)|*.sppp;*.png;*.jpg;*.bmp";
             if (f.ShowDialog() == DialogResult.OK && f.FileName.Length > 0)
             {
                 SchetsWin s = new SchetsWin();
-                s.LoadBitmap(new Bitmap(new MemoryStream(File.ReadAllBytes(f.FileName))));
+                if (Path.GetExtension(f.FileName) == ".sppp")
+                    s.LoadProject(File.ReadAllBytes(f.FileName));
+                else
+                    s.LoadBitmap(new Bitmap(new MemoryStream(File.ReadAllBytes(f.FileName))));
                 s.MdiParent = this;
                 s.Show();
             }

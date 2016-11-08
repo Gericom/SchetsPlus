@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
 using SchetsEditor.DrawingObjects;
+using System.IO;
 
 namespace SchetsEditor
 {
@@ -100,6 +101,18 @@ namespace SchetsEditor
             this.makeActionButtons(mColours);
             this.Resize += this.sizeChange;
             this.sizeChange(null, null);
+            FormClosing += SchetsWin_FormClosing;
+            sketchControl.Schets.AcknowledgeChanges();
+        }
+
+        private void SchetsWin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sketchControl.Schets.HasUnsavedChanges)
+            {
+                if (MessageBox.Show("Are you sure you want to close without saving?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                     == DialogResult.No)
+                    e.Cancel = true;
+            }
         }
 
         public void LoadBitmap(Bitmap b)
@@ -107,6 +120,11 @@ namespace SchetsEditor
             sketchControl.Schets.VeranderAfmeting(b.Size);
             sketchControl.Schets.BeginAddObject(new BitmapObject(b, false));
             sketchControl.Schets.EndAddObject();
+        }
+
+        public void LoadProject(byte[] data)
+        {
+            sketchControl.Schets.Read(data);
         }
 
         private void makeFileMenu()
@@ -134,21 +152,27 @@ namespace SchetsEditor
         private void Save(object o, EventArgs e)
         {
             SaveFileDialog f = new SaveFileDialog();
-            f.Filter = "PNG Images (*.png)|*.png|JPEG Images (*.jpg)|*.jpg|BMP Images (*.bmp)|*.bmp";
+            f.Filter = "Schets++ Project(*.sppp)|*.sppp|PNG Images (*.png)|*.png|JPEG Images (*.jpg)|*.jpg|BMP Images (*.bmp)|*.bmp";
             if (f.ShowDialog() == DialogResult.OK && f.FileName.Length > 0)
             {
                 switch (f.FilterIndex)
                 {
                     case 1:
-                        sketchControl.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                        byte[] data = sketchControl.Schets.Write();
+                        File.Create(f.FileName).Close();
+                        File.WriteAllBytes(f.FileName, data);
                         break;
                     case 2:
-                        sketchControl.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        sketchControl.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Png);
                         break;
                     case 3:
+                        sketchControl.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case 4:
                         sketchControl.Schets.ToBitmap().Save(f.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
                         break;
                 }
+                sketchControl.Schets.AcknowledgeChanges();
             }
         }
 

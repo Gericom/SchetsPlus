@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,22 @@ namespace SchetsEditor.DrawingObjects
     {
         public Color Color { get; set; }
 
+        public VectorObject() { }
+        public VectorObject(BinaryReader reader)
+            : base(reader)
+        {
+            Color = Color.FromArgb(reader.ReadInt32());
+        }
+
         public override void Draw(Graphics g)
         {
             Draw(g, Color);
+        }
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            writer.Write(Color.ToArgb());
         }
     }
 }
