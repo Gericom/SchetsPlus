@@ -15,6 +15,13 @@ namespace SchetsEditor.DrawingObjects
             : base(reader)
         { }
 
+        public override DrawingObject Clone()
+        {
+            RectangleObject cloneObject = new RectangleObject();
+            CopySettingsTo(cloneObject);
+            return cloneObject;
+        }
+
         public override void Draw(Graphics g, Color colorOverride, bool picking = false)
         {
             var gs = g.Save();

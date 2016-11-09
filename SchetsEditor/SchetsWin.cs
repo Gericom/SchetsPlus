@@ -21,12 +21,12 @@ namespace SchetsEditor
                                  , Assembly.GetExecutingAssembly()
                                  );
 
-        Dictionary<ISchetsTool, RadioButton> mRadioButtons;
+        Dictionary<ISchetsTool, ToolStripButton> mRadioButtons;
         private void sizeChange(object o, EventArgs ea)
         {
-            schetsControl.Size = new Size(this.ClientSize.Width - 50
+            schetsControl.Size = new Size(this.ClientSize.Width - 80
                                           , this.ClientSize.Height - 50);
-            paneel.Location = new Point(64, this.ClientSize.Height - 30);
+            paneel.Location = new Point(64 + 10, this.ClientSize.Height - 30);
         }
 
         private void clickToolMenu(object obj, EventArgs ea)
@@ -38,7 +38,10 @@ namespace SchetsEditor
 
         private void clickToolButton(object obj, EventArgs ea)
         {
-            this.currentTool = (ISchetsTool)((RadioButton)obj).Tag;
+            foreach (ToolStripButton b in mRadioButtons.Values)
+                if (b != obj)
+                    b.Checked = false;
+            this.currentTool = (ISchetsTool)((ToolStripButton)obj).Tag;
         }
 
         private void closePanel(object obj, EventArgs ea)
@@ -68,7 +71,7 @@ namespace SchetsEditor
             currentTool = mTools[0];
 
             schetsControl = new SchetsControl();
-            schetsControl.Location = new Point(64, 10);
+            schetsControl.Location = new Point(64 + 10, 10);
             schetsControl.MouseDown += (object o, MouseEventArgs mea) =>
                                        {
                                            vast = true;
@@ -90,6 +93,7 @@ namespace SchetsEditor
                                           currentTool.Letter(schetsControl, kpea.KeyChar);
                                       };
             this.Controls.Add(schetsControl);
+          
 
             menuStrip = new MenuStrip();
             menuStrip.Visible = false;
@@ -197,6 +201,7 @@ namespace SchetsEditor
             menu.DropDownItems.Add("Clear", null, schetsControl.Clear);
             menu.DropDownItems.Add("Rotate", null, schetsControl.Rotate);
             menu.DropDownItems.Add("Undo", null, schetsControl.Undo);
+            menu.DropDownItems.Add("Redo", null, schetsControl.Redo);
             ToolStripMenuItem submenu = new ToolStripMenuItem("Colors");
             foreach (string k in kleuren)
                 submenu.DropDownItems.Add(k, null, schetsControl.VeranderKleurViaMenu);
@@ -206,25 +211,28 @@ namespace SchetsEditor
 
         private void makeToolButtons(ICollection<ISchetsTool> tools)
         {
-            mRadioButtons = new Dictionary<ISchetsTool, RadioButton>();
-            int t = 0;
+            mRadioButtons = new Dictionary<ISchetsTool, ToolStripButton>();
+            ToolStrip s = new ToolStrip();
+            s.Dock = DockStyle.Left;
+            s.ImageScalingSize = new Size(32, 32);
+            int i = 0;
             foreach (ISchetsTool tool in tools)
             {
-                RadioButton b = new RadioButton();
-                b.Appearance = Appearance.Button;
-                b.Size = new Size(45, 62);
-                b.Location = new Point(10, 10 + t * 62);
-                b.Tag = tool;
-                b.Text = tool.ToString();
-                b.Image = (Image)resourcemanager.GetObject(tool.ToString());
-                b.TextAlign = ContentAlignment.TopCenter;
-                b.ImageAlign = ContentAlignment.BottomCenter;
-                b.Click += this.clickToolButton;
-                this.Controls.Add(b);
-                mRadioButtons.Add(tool, b);
-                if (t == 0) b.Select();
-                t++;
+                var tb = new ToolStripButton(
+                        tool.ToString(),
+                        (Image)resourcemanager.GetObject(tool.ToString()),
+                        clickToolButton)
+                {
+                    Tag = tool,
+                    TextImageRelation = TextImageRelation.ImageAboveText,
+                    CheckOnClick = true,
+                    Checked = i == 0
+                };
+                s.Items.Add(tb);
+                mRadioButtons.Add(tool, tb);
+                i++;
             }
+            this.Controls.Add(s);
         }
 
         private void makeActionButtons(String[] kleuren)
@@ -233,7 +241,7 @@ namespace SchetsEditor
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
 
-            Button b; Label l; ComboBox cbb;
+            Button b; Label l;// ComboBox cbb;
             b = new Button();
             b.Text = "Clear";
             b.Location = new Point(0, 0);
@@ -264,13 +272,24 @@ namespace SchetsEditor
             l.AutoSize = true;
             paneel.Controls.Add(l);
 
-            cbb = new ComboBox(); cbb.Location = new Point(400, 0);
-            cbb.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbb.SelectedValueChanged += schetsControl.VeranderKleur;
-            foreach (string k in kleuren)
-                cbb.Items.Add(k);
-            cbb.SelectedIndex = 0;
+            Button cbb = new Button();
+            cbb.Location = new Point(400, 0);
+            cbb.Text = "";
+            cbb.BackColor = Color.Black;
+            schetsControl.penColor = Color.Black;
+            cbb.Click += Cbb_Click;
             paneel.Controls.Add(cbb);
+        }
+
+        private void Cbb_Click(object sender, EventArgs e)
+        {
+            var cd = new ColorDialog();
+            cd.Color = schetsControl.penColor;
+            if (cd.ShowDialog() == DialogResult.OK)
+            {
+                schetsControl.penColor = cd.Color;
+                ((Button)sender).BackColor = cd.Color;
+            }
         }
 
         private void InitializeComponent()

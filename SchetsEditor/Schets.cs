@@ -54,25 +54,33 @@ namespace SchetsEditor
         public void Clear()
         {
             //mDrawingObjectList.Clear();
+            mHistoryObjects.BeginAtomicAction();
+            foreach (DrawingObject d in mHistoryObjects.CurrentList)
+                mHistoryObjects.RemoveDrawingObject(d);
+            mHistoryObjects.EndAtomicAction();
             HasUnsavedChanges = true;
         }
         public void Rotate()
         {
-           /* foreach (DrawingObject d in mDrawingObjectList)
-                d.Rotate(mSchetsSize.Width, mSchetsSize.Height);*/
+            mHistoryObjects.BeginAtomicAction();
+            foreach (DrawingObject d in mHistoryObjects.CurrentList)
+                mHistoryObjects.Mutate(d).Rotate(mSchetsSize.Width, mSchetsSize.Height);
+            mHistoryObjects.EndAtomicAction();
+            /* foreach (DrawingObject d in mDrawingObjectList)
+                 d.Rotate(mSchetsSize.Width, mSchetsSize.Height);*/
             HasUnsavedChanges = true;
         }
 
         public void Undo()
         {
-            mHistoryObjects.Undo();
-            HasUnsavedChanges = true;
-
+            if(mHistoryObjects.Undo())
+                HasUnsavedChanges = true;
         }
 
         public void Redo()
         {
-            HasUnsavedChanges = true;
+            if(mHistoryObjects.Redo())
+                HasUnsavedChanges = true;
         }
 
         public void BeginAddObject(DrawingObject dObject)
@@ -90,7 +98,7 @@ namespace SchetsEditor
 
         public DrawingObject FindObjectByPoint(Point p)
         {
-            if (p.X < 1 || p.Y < 1)
+            if (p.X < 0 || p.Y < 0)
                 return null;
             Bitmap b = new Bitmap(p.X + 1, p.Y + 1);
             Graphics g = Graphics.FromImage(b);
@@ -110,7 +118,7 @@ namespace SchetsEditor
         public void RemoveObject(DrawingObject dObject)
         {
             //mDrawingObjectList.Remove(dObject);
-            mHistoryObjects.RemoveDrawingObject(mWorkingObject);
+            mHistoryObjects.RemoveDrawingObject(dObject);
             HasUnsavedChanges = true;
         }
 

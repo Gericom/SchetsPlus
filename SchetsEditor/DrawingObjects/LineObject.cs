@@ -24,6 +24,19 @@ namespace SchetsEditor.DrawingObjects
             }
         }
 
+        public override DrawingObject Clone()
+        {
+            LineObject cloneObject = new LineObject();
+            CopySettingsTo(cloneObject);
+            return cloneObject;
+        }
+
+        public override void CopySettingsTo(DrawingObject cloneObject)
+        {
+            base.CopySettingsTo(cloneObject);
+            ((LineObject)cloneObject).Points = Points;
+        }
+
         public override void Draw(Graphics g, Color colorOverride, bool picking = false)
         {
             if (Points == null || Points.Length < 2)
@@ -33,7 +46,7 @@ namespace SchetsEditor.DrawingObjects
             g.RotateTransform(mRotationAngle);
             g.TranslateTransform(-mRotationCenter.X, -mRotationCenter.Y);
             var pen = new Pen(new SolidBrush(colorOverride), (picking ? 5 : 3));
-            g.DrawCurve(pen, Points);
+            g.DrawCurve(pen, Points, 0);
             g.Restore(gs);
         }
 

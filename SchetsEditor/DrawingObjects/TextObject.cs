@@ -22,6 +22,20 @@ namespace SchetsEditor.DrawingObjects
             Text = Encoding.Unicode.GetString(textbytes);
         }
 
+        public override DrawingObject Clone()
+        {
+            TextObject cloneObject = new TextObject();
+            CopySettingsTo(cloneObject);
+            return cloneObject;
+        }
+
+        public override void CopySettingsTo(DrawingObject cloneObject)
+        {
+            base.CopySettingsTo(cloneObject);
+            ((TextObject)cloneObject).Position = Position;
+            ((TextObject)cloneObject).Text = Text;
+        }
+
         public override void Draw(Graphics g, Color colorOverride, bool picking = false)
         {
             var gs = g.Save();

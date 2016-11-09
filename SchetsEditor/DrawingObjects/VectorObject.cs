@@ -19,6 +19,12 @@ namespace SchetsEditor.DrawingObjects
             Color = Color.FromArgb(reader.ReadInt32());
         }
 
+        public override void CopySettingsTo(DrawingObject cloneObject)
+        {
+            base.CopySettingsTo(cloneObject);
+            ((VectorObject)cloneObject).Color = Color;
+        }
+
         public override void Draw(Graphics g)
         {
             Draw(g, Color);

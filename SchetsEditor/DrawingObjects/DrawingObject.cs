@@ -29,6 +29,14 @@ namespace SchetsEditor.DrawingObjects
             mRotationAngle = reader.ReadInt32();
         }
 
+        public abstract DrawingObject Clone();
+
+        public virtual void CopySettingsTo(DrawingObject cloneObject)
+        {
+            cloneObject.mRotationAngle = mRotationAngle;
+            cloneObject.mRotationCenter = mRotationCenter;
+        }
+
         public virtual void Draw(Graphics g)
         {
             Draw(g, Color.Black);

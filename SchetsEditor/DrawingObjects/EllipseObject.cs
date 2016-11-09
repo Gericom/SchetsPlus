@@ -17,6 +17,13 @@ namespace SchetsEditor.DrawingObjects
 
         }
 
+        public override DrawingObject Clone()
+        {
+            EllipseObject cloneObject = new EllipseObject();
+            CopySettingsTo(cloneObject);
+            return cloneObject;
+        }
+
         public override void Draw(Graphics g, Color colorOverride, bool picking = false)
         {
             var gs = g.Save();

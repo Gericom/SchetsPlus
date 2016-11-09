@@ -23,6 +23,14 @@ namespace SchetsEditor.DrawingObjects
             Filled = reader.ReadByte() == 1;
         }
 
+        public override void CopySettingsTo(DrawingObject cloneObject)
+        {
+            base.CopySettingsTo(cloneObject);
+            ((ShapeObject)cloneObject).Position = Position;
+            ((ShapeObject)cloneObject).Size = Size;
+            ((ShapeObject)cloneObject).Filled = Filled;
+        }
+
         public override void Write(BinaryWriter writer)
         {
             base.Write(writer);

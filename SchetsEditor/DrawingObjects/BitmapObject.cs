@@ -16,6 +16,7 @@ namespace SchetsEditor.DrawingObjects
         public Bitmap Bitmap { get; set; }
         public bool Erasable { get; set; }
 
+        public BitmapObject() { }
         public BitmapObject(Bitmap bitmap, bool erasable = true)
         {
             Bitmap = bitmap;
@@ -33,6 +34,21 @@ namespace SchetsEditor.DrawingObjects
             byte[] bdata = reader.ReadBytes(d.Stride * d.Height);
             Marshal.Copy(bdata, 0, d.Scan0, d.Stride * d.Height);
             Bitmap.UnlockBits(d);
+        }
+
+        public override DrawingObject Clone()
+        {
+            BitmapObject cloneObject = new BitmapObject();
+            CopySettingsTo(cloneObject);
+            return cloneObject;
+        }
+
+        public override void CopySettingsTo(DrawingObject cloneObject)
+        {
+            base.CopySettingsTo(cloneObject);
+            ((BitmapObject)cloneObject).Position = Position;
+            ((BitmapObject)cloneObject).Bitmap = Bitmap;
+            ((BitmapObject)cloneObject).Erasable = Erasable;
         }
 
         public override void Draw(Graphics g, Color colorOverride, bool picking = false)
