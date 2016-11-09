@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HistoryCollection.cs" />
     <Compile Include="DrawingObjects\BitmapObject.cs" />
     <Compile Include="DrawingObjects\DrawingObject.cs" />
     <Compile Include="DrawingObjects\EllipseObject.cs" />

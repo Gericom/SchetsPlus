@@ -10,7 +10,8 @@ namespace SchetsEditor
 {
     public class Schets
     {
-        private List<DrawingObject> mDrawingObjectList = new List<DrawingObject>();
+        private HistoryCollection mHistoryObjects = new HistoryCollection();
+        //private List<DrawingObject> mDrawingObjectList = new List<DrawingObject>();
         //private List<DrawingObject> BackupDrawingObjectList = new List<DrawingObject>();
         private DrawingObject mWorkingObject;
         private Size mSchetsSize;
@@ -45,27 +46,33 @@ namespace SchetsEditor
             gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
             gr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             gr.Clear(Color.White);
-            foreach (DrawingObject d in mDrawingObjectList)
+            foreach (DrawingObject d in mHistoryObjects.CurrentList)
                 d.Draw(gr);
             if (mWorkingObject != null)
                 mWorkingObject.Draw(gr);
         }
         public void Clear()
         {
-            mDrawingObjectList.Clear();
+            //mDrawingObjectList.Clear();
             HasUnsavedChanges = true;
         }
         public void Rotate()
         {
-            foreach (DrawingObject d in mDrawingObjectList)
-                d.Rotate(mSchetsSize.Width, mSchetsSize.Height);
+           /* foreach (DrawingObject d in mDrawingObjectList)
+                d.Rotate(mSchetsSize.Width, mSchetsSize.Height);*/
             HasUnsavedChanges = true;
         }
 
         public void Undo()
         {
-            //if ( HasRemovedObject == true || mDrawingObjectList != null || BackupDrawingObjectList != null ) ;
+            mHistoryObjects.Undo();
+            HasUnsavedChanges = true;
 
+        }
+
+        public void Redo()
+        {
+            HasUnsavedChanges = true;
         }
 
         public void BeginAddObject(DrawingObject dObject)
@@ -75,7 +82,8 @@ namespace SchetsEditor
 
         public void EndAddObject()
         {
-            mDrawingObjectList.Add(mWorkingObject);
+            //mDrawingObjectList.Add(mWorkingObject);
+            mHistoryObjects.AddDrawingObject(mWorkingObject);
             mWorkingObject = null;
             HasUnsavedChanges = true;
         }
@@ -91,17 +99,18 @@ namespace SchetsEditor
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
             g.Clear(Color.Transparent);
-            for (int i = 0; i < mDrawingObjectList.Count; i++)
-                mDrawingObjectList[i].Draw(g, Color.FromArgb((int)(0xFF000000 | (i + 1))), true);
+            for (int i = 0; i < mHistoryObjects.CurrentList.Count; i++)
+                mHistoryObjects.CurrentList[i].Draw(g, Color.FromArgb((int)(0xFF000000 | (i + 1))), true);
             int id = b.GetPixel(p.X, p.Y).ToArgb() & 0xFFFFFF;
             if (id > 0)
-                return mDrawingObjectList[id - 1];
+                return mHistoryObjects.CurrentList[id - 1];
             return null;
         }
 
         public void RemoveObject(DrawingObject dObject)
         {
-            mDrawingObjectList.Remove(dObject);
+            //mDrawingObjectList.Remove(dObject);
+            mHistoryObjects.RemoveDrawingObject(mWorkingObject);
             HasUnsavedChanges = true;
         }
 
@@ -126,8 +135,8 @@ namespace SchetsEditor
                 throw new Exception("Invalid Signature!");
             mSchetsSize = new Size(r.ReadInt32(), r.ReadInt32());
             int count = r.ReadInt32();
-            mDrawingObjectList.Clear();
-            for (int i = 0; i < count; i++)
+            mHistoryObjects.ClearHistory();
+          /*  for (int i = 0; i < count; i++)
             {
                 byte type = r.ReadByte();
                 switch ((DrawingObject.DrawingObjectType)type)
@@ -148,7 +157,7 @@ namespace SchetsEditor
                         mDrawingObjectList.Add(new BitmapObject(r));
                         break;
                 }
-            }
+            }*/
             r.Close();
             HasUnsavedChanges = false;
         }
@@ -164,9 +173,9 @@ namespace SchetsEditor
             writer.Write((byte)'P');
             writer.Write(mSchetsSize.Width);
             writer.Write(mSchetsSize.Height);
-            writer.Write(mDrawingObjectList.Count);
+          /*  writer.Write(mDrawingObjectList.Count);
             foreach (DrawingObject o in mDrawingObjectList)
-                o.Write(writer);
+                o.Write(writer);*/
             writer.Flush();
             gs.Close();
             byte[] result = m.ToArray();

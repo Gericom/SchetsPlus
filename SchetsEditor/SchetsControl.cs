@@ -56,6 +56,12 @@ namespace SchetsEditor
             schets.Undo();
             this.Invalidate();
         }
+
+        public void Redo(object o, EventArgs ea)
+        {
+            schets.Redo();
+            this.Invalidate();
+        }
         public void VeranderKleur(object obj, EventArgs ea)
         {
             string colourName = ((ComboBox)obj).Text;

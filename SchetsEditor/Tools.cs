@@ -195,7 +195,6 @@ namespace SchetsEditor
         public override void Bezig(Point p1, Point p2)
         {
             mPoints.Add(p2);
-            //HELP FIXME!!!!
             ((LineObject)mDrawingObject).Points = mPoints.ToArray();
         }
 

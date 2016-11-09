@@ -252,13 +252,19 @@ namespace SchetsEditor
             b.Click += schetsControl.Undo;
             paneel.Controls.Add(b);
 
+            b = new Button();
+            b.Text = "Redo";
+            b.Location = new Point(240, 0);
+            b.Click += schetsControl.Redo;
+            paneel.Controls.Add(b);
+
             l = new Label();
             l.Text = "Pen Colour:";
-            l.Location = new Point(250, 3);
+            l.Location = new Point(330, 3);
             l.AutoSize = true;
             paneel.Controls.Add(l);
 
-            cbb = new ComboBox(); cbb.Location = new Point(320, 0);
+            cbb = new ComboBox(); cbb.Location = new Point(400, 0);
             cbb.DropDownStyle = ComboBoxStyle.DropDownList;
             cbb.SelectedValueChanged += schetsControl.VeranderKleur;
             foreach (string k in kleuren)

@@ -80,7 +80,7 @@ namespace SchetsEditor
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Hoofdscherm));
             this.SuspendLayout();
-            // 
+            // sky
             // Hoofdscherm
             // 
             this.ClientSize = new System.Drawing.Size(284, 261);
