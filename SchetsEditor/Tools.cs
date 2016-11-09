@@ -260,8 +260,6 @@ namespace SchetsEditor
 
         public override void MouseDown(SchetsControl s, Point p)
         {
-            //base.MouseDown(s, p);
-
         }
         public override void MouseDrag(SchetsControl s, Point p)
         {
@@ -269,7 +267,6 @@ namespace SchetsEditor
         }
         public override void MouseUp(SchetsControl s, Point p)
         {
-            //base.MouseUp(s, p);
             var obj = s.Schets.FindObjectByPoint(p);
             if (obj != null)
                 s.Schets.MoveObjectDown(obj);
@@ -299,10 +296,6 @@ namespace SchetsEditor
         }
         public override void MouseUp(SchetsControl s, Point p)
         {
-            /*base.MouseUp(s, p);
-            var obj = s.Schets.FindObjectByPoint(p);
-            if (obj != null)
-                s.Schets.MoveObjectDown(obj);*/
             MouseDrag(s, p);
             mDrawingObject = null;
             s.Invalidate();

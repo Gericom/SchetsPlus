@@ -42,7 +42,7 @@ namespace SchetsEditor.DrawingObjects
             g.TranslateTransform(mRotationCenter.X, mRotationCenter.Y);
             g.RotateTransform(mRotationAngle);
             g.TranslateTransform(-mRotationCenter.X, -mRotationCenter.Y);
-            Font font = new Font("Calibri", 40);
+            Font font = new Font("Papyrus", 40);
             g.DrawString(Text, font, new SolidBrush(colorOverride), Position, StringFormat.GenericTypographic);
             g.Restore(gs);
         }
