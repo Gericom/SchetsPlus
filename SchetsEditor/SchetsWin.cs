@@ -33,7 +33,7 @@ namespace SchetsEditor
         {
             var tool = (ISchetsTool)((ToolStripMenuItem)obj).Tag;
             this.currentTool = tool;
-            mRadioButtons[tool].Select();
+            mRadioButtons[tool].PerformClick();
         }
 
         private void clickToolButton(object obj, EventArgs ea)
