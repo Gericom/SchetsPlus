@@ -8,15 +8,10 @@ namespace SchetsEditor
     public class SchetsControl : UserControl
     {
         private Schets schets;
-        //private Color pencolour;
-        //private Color[] palette;
 
+        public Color PenColor { get; set; }
+        public int PenSize { get; set; }
 
-        public Color penColor { get; set; }
-        public Size penSize { get; set; }
-        //{
-       //     get { return pencolour; }
-       // }
         public Schets Schets
         {
             get { return schets; }
@@ -66,12 +61,12 @@ namespace SchetsEditor
         public void VeranderKleur(object obj, EventArgs ea)
         {
             string colourName = ((ComboBox)obj).Text;
-            penColor = Color.FromName(colourName);
+            PenColor = Color.FromName(colourName);
         }
         public void VeranderKleurViaMenu(object obj, EventArgs ea)
         {
             string colourName = ((ToolStripMenuItem)obj).Text;
-            penColor = Color.FromName(colourName);
+            PenColor = Color.FromName(colourName);
         }
         private void InitializeComponent()
         {

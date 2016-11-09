@@ -59,7 +59,9 @@ namespace SchetsEditor
                                     , new EllipseTool()
                                     , new FillEllipse()
                                     , new TekstTool()
-                                    , new GumTool()
+                                    , new GumTool(),
+                                    new MoveUpTool(),
+                                    new MoveDownTool()
                                     };
 
             //we can add the colour palette to this or extend the color array?
@@ -67,7 +69,7 @@ namespace SchetsEditor
                                  , "Yellow", "Magenta", "Cyan","Brown","Teal"
                                  };
 
-            this.ClientSize = new Size(700, 500);
+            this.ClientSize = new Size(700, 550);
             currentTool = mTools[0];
 
             schetsControl = new SchetsControl();
@@ -275,6 +277,11 @@ namespace SchetsEditor
             NumericUpDown h = new NumericUpDown();
             h.Location = new Point(380, 0);
             h.Size = new Size(50,10);
+            h.Minimum = 1;
+            h.Maximum = 20;
+            h.Value = 3;
+            schetsControl.PenSize = 3;
+            h.ValueChanged += (d, f) => { schetsControl.PenSize = (int)h.Value; };
             paneel.Controls.Add(h);
 
             l = new Label();
@@ -287,7 +294,7 @@ namespace SchetsEditor
             cbb.Location = new Point(510, 0);
             cbb.Text = "";
             cbb.BackColor = Color.Black;
-            schetsControl.penColor = Color.Black;
+            schetsControl.PenColor = Color.Black;
             cbb.Click += Cbb_Click;
             paneel.Controls.Add(cbb);
         }
@@ -295,10 +302,10 @@ namespace SchetsEditor
         private void Cbb_Click(object sender, EventArgs e)
         {
             var cd = new ColorDialog();
-            cd.Color = schetsControl.penColor;
+            cd.Color = schetsControl.PenColor;
             if (cd.ShowDialog() == DialogResult.OK)
             {
-                schetsControl.penColor = cd.Color;
+                schetsControl.PenColor = cd.Color;
                 ((Button)sender).BackColor = cd.Color;
             }
         }

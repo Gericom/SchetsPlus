@@ -31,7 +31,7 @@ namespace SchetsEditor.DrawingObjects
             if (Filled)
                 g.FillRectangle(new SolidBrush(colorOverride), new Rectangle(Position, Size));
             else
-                g.DrawRectangle(new Pen(new SolidBrush(colorOverride), (picking ? 4 : 2)), new Rectangle(Position, Size));
+                g.DrawRectangle(new Pen(new SolidBrush(colorOverride), (picking ? LineWidth + 2 : LineWidth)), new Rectangle(Position, Size));
             g.Restore(gs);
         }
 

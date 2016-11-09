@@ -101,5 +101,35 @@ namespace SchetsEditor
             mAtomicActionRunning = false;
             mAtomicNewList = null;
         }
+
+        public void MoveObjectDown(DrawingObject dObject)
+        {
+            if (mHistoryObjects[mCurrentHistoryLevel].IndexOf(dObject) == 0)
+                return;
+            bool wasRunningAtomic = mAtomicActionRunning;
+            if (!wasRunningAtomic)
+                BeginAtomicAction();
+            int idx = mAtomicNewList.IndexOf(dObject);
+            var swap = mAtomicNewList[idx];
+            mAtomicNewList[idx] = mAtomicNewList[idx - 1];
+            mAtomicNewList[idx - 1] = swap;
+            if (!wasRunningAtomic)
+                EndAtomicAction();
+        }
+
+        public void MoveObjectUp(DrawingObject dObject)
+        {
+            if (mHistoryObjects[mCurrentHistoryLevel].IndexOf(dObject) == mHistoryObjects[mCurrentHistoryLevel].Count - 1)
+                return;
+            bool wasRunningAtomic = mAtomicActionRunning;
+            if (!wasRunningAtomic)
+                BeginAtomicAction();
+            int idx = mAtomicNewList.IndexOf(dObject);
+            var swap = mAtomicNewList[idx];
+            mAtomicNewList[idx] = mAtomicNewList[idx + 1];
+            mAtomicNewList[idx + 1] = swap;
+            if (!wasRunningAtomic)
+                EndAtomicAction();
+        }
     }
 }

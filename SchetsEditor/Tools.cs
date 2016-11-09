@@ -44,7 +44,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new TextObject() { Position = p, Text = "", Color = s.penColor };
+            mDrawingObject = new TextObject() { Position = p, Text = "", Color = s.PenColor };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -105,7 +105,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new RectangleObject() { Color = s.penColor, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new RectangleObject() { Color = s.PenColor, Filled = false, Position = p, Size = new Size(0, 0), LineWidth = s.PenSize };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -120,6 +120,12 @@ namespace SchetsEditor
     public class VolRechthoekTool : RechthoekTool
     {
         public override string ToString() { return "Plane"; }
+
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+            ((RectangleObject)mDrawingObject).LineWidth = 3;
+        }
 
         public override void Compleet(Point p1, Point p2)
         {
@@ -137,7 +143,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new EllipseObject() { Color = s.penColor, Filled = false, Position = p, Size = new Size(0,0) };
+            mDrawingObject = new EllipseObject() { Color = s.PenColor, Filled = false, Position = p, Size = new Size(0,0), LineWidth = s.PenSize };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -152,6 +158,12 @@ namespace SchetsEditor
     public class FillEllipse : EllipseTool
     {
         public override string ToString() { return "FilledEllipse"; }
+
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+            ((EllipseObject)mDrawingObject).LineWidth = 3;
+        }
 
         public override void Compleet(Point p1, Point p2)
         {
@@ -170,7 +182,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new LineObject() { Color = s.penColor };
+            mDrawingObject = new LineObject() { Color = s.PenColor, LineWidth = s.PenSize };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
@@ -218,6 +230,50 @@ namespace SchetsEditor
             var obj = s.Schets.FindObjectByPoint(p);
             if (obj != null)
                 s.Schets.RemoveObject(obj);
+            s.Invalidate();
+        }
+    }
+    public class MoveUpTool : StartpuntTool
+    {
+        public override string ToString() { return "MoveUp"; }
+
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+
+        }
+        public override void MouseDrag(SchetsControl s, Point p)
+        {
+
+        }
+        public override void MouseUp(SchetsControl s, Point p)
+        {
+            base.MouseUp(s, p);
+            var obj = s.Schets.FindObjectByPoint(p);
+            if (obj != null)
+                s.Schets.MoveObjectUp(obj);
+            s.Invalidate();
+        }
+    }
+    public class MoveDownTool : StartpuntTool
+    {
+        public override string ToString() { return "MoveDown"; }
+
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+
+        }
+        public override void MouseDrag(SchetsControl s, Point p)
+        {
+
+        }
+        public override void MouseUp(SchetsControl s, Point p)
+        {
+            base.MouseUp(s, p);
+            var obj = s.Schets.FindObjectByPoint(p);
+            if (obj != null)
+                s.Schets.MoveObjectDown(obj);
             s.Invalidate();
         }
     }

@@ -13,6 +13,7 @@ namespace SchetsEditor.DrawingObjects
         public Point Position { get; set; }
         public Size Size { get; set; }
         public bool Filled { get; set; }
+        public int LineWidth { get; set; }
 
         public ShapeObject() { }
         public ShapeObject(BinaryReader reader)
@@ -21,6 +22,7 @@ namespace SchetsEditor.DrawingObjects
             Position = new Point(reader.ReadInt32(), reader.ReadInt32());
             Size = new Size(reader.ReadInt32(), reader.ReadInt32());
             Filled = reader.ReadByte() == 1;
+            LineWidth = reader.ReadInt32();
         }
 
         public override void CopySettingsTo(DrawingObject cloneObject)
@@ -29,6 +31,7 @@ namespace SchetsEditor.DrawingObjects
             ((ShapeObject)cloneObject).Position = Position;
             ((ShapeObject)cloneObject).Size = Size;
             ((ShapeObject)cloneObject).Filled = Filled;
+            ((ShapeObject)cloneObject).LineWidth = LineWidth;
         }
 
         public override void Write(BinaryWriter writer)
@@ -39,6 +42,7 @@ namespace SchetsEditor.DrawingObjects
             writer.Write(Size.Width);
             writer.Write(Size.Height);
             writer.Write((byte)(Filled ? 1 : 0));
+            writer.Write(LineWidth);
         }
     }
 }
