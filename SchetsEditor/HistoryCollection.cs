@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace SchetsEditor
 {
-    class HistoryCollection
+    public class HistoryCollection
     {
+        //The working of HistoryCollection is explained in Veranderingen.txt
         List<List<DrawingObject>> mHistoryObjects = new List<List<DrawingObject>>();
         int mCurrentHistoryLevel;
         public List<DrawingObject> CurrentList { get { return mHistoryObjects[mCurrentHistoryLevel]; } }
@@ -41,6 +42,7 @@ namespace SchetsEditor
                 EndAtomicAction();
         }
 
+        //Makes it possible to safely change the properties of an object
         public DrawingObject Mutate(DrawingObject dObject)
         {
             bool wasRunningAtomic = mAtomicActionRunning;
@@ -53,6 +55,7 @@ namespace SchetsEditor
             return newDObject;
         }
 
+        //Registers the action in the history
         private void CommitAction(List<DrawingObject> dObjectList)
         {
             if(mCurrentHistoryLevel != mHistoryObjects.Count - 1)
@@ -88,6 +91,7 @@ namespace SchetsEditor
             mAtomicNewList = null;
         }
 
+        //Begin a one-step action
         public void BeginAtomicAction()
         {
             mAtomicActionRunning = true;
@@ -95,6 +99,7 @@ namespace SchetsEditor
             mAtomicNewList.AddRange(mHistoryObjects[mCurrentHistoryLevel]);
         }
 
+        //End a one-step action
         public void EndAtomicAction()
         {
             CommitAction(mAtomicNewList);
@@ -102,6 +107,7 @@ namespace SchetsEditor
             mAtomicNewList = null;
         }
 
+        //Move object down in the layout hierarchy
         public void MoveObjectDown(DrawingObject dObject)
         {
             if (mHistoryObjects[mCurrentHistoryLevel].IndexOf(dObject) == 0)
@@ -117,6 +123,7 @@ namespace SchetsEditor
                 EndAtomicAction();
         }
 
+        //Move object up in the layout hierarchy
         public void MoveObjectUp(DrawingObject dObject)
         {
             if (mHistoryObjects[mCurrentHistoryLevel].IndexOf(dObject) == mHistoryObjects[mCurrentHistoryLevel].Count - 1)

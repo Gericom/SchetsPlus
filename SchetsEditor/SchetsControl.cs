@@ -52,32 +52,10 @@ namespace SchetsEditor
             schets.Undo();
             this.Invalidate();
         }
-
         public void Redo(object o, EventArgs ea)
         {
             schets.Redo();
             this.Invalidate();
-        }
-        public void VeranderKleur(object obj, EventArgs ea)
-        {
-            string colourName = ((ComboBox)obj).Text;
-            PenColor = Color.FromName(colourName);
-        }
-        public void VeranderKleurViaMenu(object obj, EventArgs ea)
-        {
-            string colourName = ((ToolStripMenuItem)obj).Text;
-            PenColor = Color.FromName(colourName);
-        }
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // SchetsControl
-            // 
-            this.DoubleBuffered = true;
-            this.Name = "SchetsControl";
-            this.ResumeLayout(false);
-
         }
     }
 }

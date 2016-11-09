@@ -16,6 +16,7 @@ namespace SchetsEditor
 
         public Boolean HasUnsavedChanges { get; private set; } = false;
 
+        //Acknowledge that changes have been processed (saved)
         public void AcknowledgeChanges()
         {
             HasUnsavedChanges = false;
@@ -36,6 +37,7 @@ namespace SchetsEditor
             }
         }
 
+        //Draw the drawing objects in the list and the currently-being-drawed object
         public void Teken(Graphics gr)
         {
             gr.SmoothingMode = SmoothingMode.AntiAlias;
@@ -48,6 +50,7 @@ namespace SchetsEditor
             if (mWorkingObject != null)
                 mWorkingObject.Draw(gr);
         }
+        //Clear the canvas in as a one-step atomic action
         public void Clear()
         {
             mHistoryObjects.BeginAtomicAction();
@@ -56,6 +59,7 @@ namespace SchetsEditor
             mHistoryObjects.EndAtomicAction();
             HasUnsavedChanges = true;
         }
+        //Rotate the canvas as a one-step atomic action
         public void Rotate()
         {
             mHistoryObjects.BeginAtomicAction();
@@ -89,6 +93,8 @@ namespace SchetsEditor
             HasUnsavedChanges = true;
         }
 
+        //Mutate an object, to make it possible to safely change its properties
+        //This is also recorded as an undoable action
         public DrawingObject Mutate(DrawingObject dObject)
         {
             DrawingObject mutated = mHistoryObjects.Mutate(dObject);
@@ -96,11 +102,13 @@ namespace SchetsEditor
             return mutated;
         }
 
+        //Start adding an object, makes it possible to show what one's drawing
         public void BeginAddObject(DrawingObject dObject)
         {
             mWorkingObject = dObject;
         }
 
+        //Finish adding the object; add it to the list
         public void EndAddObject()
         {
             mHistoryObjects.AddDrawingObject(mWorkingObject);
@@ -108,6 +116,8 @@ namespace SchetsEditor
             HasUnsavedChanges = true;
         }
 
+        //Find the object at a certain pixel using a method called 'picking'
+        //How this works is described in Veranderingen.txt
         public DrawingObject FindObjectByPoint(Point p)
         {
             if (p.X < 0 || p.Y < 0)
@@ -141,9 +151,11 @@ namespace SchetsEditor
             return b;
         }
 
+        //Read a schets from a project file
         public void Read(byte[] data)
         {
             BinaryReader r = new BinaryReader(new GZipStream(new MemoryStream(data), CompressionMode.Decompress));
+            //File Signature
             if (r.ReadByte() != (byte)'S')
                 throw new Exception("Invalid Signature!");
             if (r.ReadByte() != (byte)'P')
@@ -152,9 +164,12 @@ namespace SchetsEditor
                 throw new Exception("Invalid Signature!");
             if (r.ReadByte() != (byte)'P')
                 throw new Exception("Invalid Signature!");
+            //Schets Size
             mSchetsSize = new Size(r.ReadInt32(), r.ReadInt32());
+            //Number of objects
             int count = r.ReadInt32();
             mHistoryObjects.ClearHistory();
+            //Read each object
             for (int i = 0; i < count; i++)
             {
                 byte type = r.ReadByte();
@@ -184,15 +199,20 @@ namespace SchetsEditor
         public byte[] Write()
         {
             MemoryStream m = new MemoryStream();
+            //Use GZip compression, to bring the file size down quite a lot
             GZipStream gs = new GZipStream(m, CompressionLevel.Optimal);
             BinaryWriter writer = new BinaryWriter(gs);
+            //Signature
             writer.Write((byte)'S');
             writer.Write((byte)'P');
             writer.Write((byte)'P');
             writer.Write((byte)'P');
+            //Schets Size
             writer.Write(mSchetsSize.Width);
             writer.Write(mSchetsSize.Height);
+            //Number of objects
             writer.Write(mHistoryObjects.CurrentList.Count);
+            //Write each object
             foreach (DrawingObject o in mHistoryObjects.CurrentList)
                 o.Write(writer);
             writer.Flush();

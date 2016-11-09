@@ -10,6 +10,7 @@ namespace SchetsEditor.DrawingObjects
 {
     public abstract class DrawingObject
     {
+        //Object Type for saving use
         public enum DrawingObjectType : byte
         {
             RectangleObject,
@@ -31,6 +32,7 @@ namespace SchetsEditor.DrawingObjects
 
         public abstract DrawingObject Clone();
 
+        //Copy settings for cloning
         public virtual void CopySettingsTo(DrawingObject cloneObject)
         {
             cloneObject.mRotationAngle = mRotationAngle;
@@ -44,6 +46,7 @@ namespace SchetsEditor.DrawingObjects
 
         public abstract void Draw(Graphics g, Color colorOverride, bool picking = false);
 
+        //Fix the delta x and y for when the object is rotated
         public void FixRot(ref Point p)
         {
             if (mRotationAngle == 0) ;
@@ -66,6 +69,7 @@ namespace SchetsEditor.DrawingObjects
             }
         }
 
+        //Rotate the object 90 degrees clockwise around the canvas middle
         public void Rotate(int width, int height)
         {
             mRotationCenter = new Point(width / 2, height / 2);
@@ -81,6 +85,7 @@ namespace SchetsEditor.DrawingObjects
             writer.Write(mRotationAngle);
         }
 
+        //Translate the object by the given delta
         public abstract void Translate(Point delta);
     }
 }

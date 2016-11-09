@@ -58,8 +58,8 @@ namespace SchetsEditor
         }
         private void about(object o, EventArgs ea)
         {
-            MessageBox.Show("Schets versie 2.0\n(c) UU Informatica 2016\nFlorian en Ruben"
-                           , "Over \"Schets\""
+            MessageBox.Show("Schets version 2.0\n(c) UU Computer Science 2016\nFlorian en Ruben"
+                           , "About \"Schets\""
                            , MessageBoxButtons.OK
                            , MessageBoxIcon.Information
                            );
@@ -88,7 +88,6 @@ namespace SchetsEditor
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Hoofdscherm";
             this.ResumeLayout(false);
-
         }
     }
 }

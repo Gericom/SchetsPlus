@@ -70,28 +70,31 @@ namespace SchetsEditor
 
             schetsControl = new SchetsControl();
             schetsControl.Location = new Point(64 + 10, 10);
-            schetsControl.MouseDown += (object o, MouseEventArgs mea) =>
-                                       {
-                                           vast = true;
-                                           currentTool.MouseDown(schetsControl, mea.Location);
-                                       };
-            schetsControl.MouseMove += (object o, MouseEventArgs mea) =>
-                                       {
-                                           if (vast)
-                                               currentTool.MouseDrag(schetsControl, mea.Location);
-                                       };
-            schetsControl.MouseUp += (object o, MouseEventArgs mea) =>
-                                     {
-                                         if (vast)
-                                             currentTool.MouseUp(schetsControl, mea.Location);
-                                         vast = false;
-                                     };
-            schetsControl.KeyPress += (object o, KeyPressEventArgs kpea) =>
-                                      {
-                                          currentTool.Letter(schetsControl, kpea.KeyChar);
-                                      };
+            schetsControl.MouseDown +=
+                (o, mea) =>
+                {
+                    vast = true;
+                    currentTool.MouseDown(schetsControl, mea.Location);
+                };
+            schetsControl.MouseMove += 
+                (o, mea) =>
+                {
+                    if (vast)
+                        currentTool.MouseDrag(schetsControl, mea.Location);
+                };
+            schetsControl.MouseUp += 
+                (o, mea) =>
+                {
+                    if (vast)
+                        currentTool.MouseUp(schetsControl, mea.Location);
+                    vast = false;
+                };
+            schetsControl.KeyPress += 
+                (o, kpea) =>
+                {
+                    currentTool.Letter(schetsControl, kpea.KeyChar);
+                };
             this.Controls.Add(schetsControl);
-          
 
             menuStrip = new MenuStrip();
             menuStrip.Visible = false;
@@ -136,9 +139,6 @@ namespace SchetsEditor
             var it = menu.DropDownItems.Add("Save", null, Save);
             it.MergeIndex = 4;
             it.MergeAction = MergeAction.Insert;
-            //it = menu.DropDownItems.Add("Save As");
-            //it.MergeIndex = 5;
-            //it.MergeAction = MergeAction.Insert;
             it = menu.DropDownItems.Add("-");
             it.MergeIndex = 5;
             it.MergeAction = MergeAction.Insert;
@@ -201,10 +201,6 @@ namespace SchetsEditor
             menu.DropDownItems.Add("Undo", null, schetsControl.Undo);
             menu.DropDownItems.Add("Redo", null, schetsControl.Redo);
             menu.DropDownItems.Add("Choose Color", null, MColorButton_Click);
-            // ToolStripMenuItem submenu = new ToolStripMenuItem("Colors");
-            //foreach (string k in kleuren)
-            //    submenu.DropDownItems.Add(k, null, schetsControl.VeranderKleurViaMenu);
-            //menu.DropDownItems.Add(submenu);
             menuStrip.Items.Add(menu);
         }
 
@@ -242,7 +238,7 @@ namespace SchetsEditor
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
 
-            Button b; Label l, q;// ComboBox cbb;
+            Button b; Label l, q;
             b = new Button();
             b.Text = "Clear";
             b.Location = new Point(0, 0);
@@ -275,7 +271,7 @@ namespace SchetsEditor
 
             NumericUpDown h = new NumericUpDown();
             h.Location = new Point(380, 0);
-            h.Size = new Size(50,10);
+            h.Size = new Size(50, 10);
             h.Minimum = 1;
             h.Maximum = 50;
             h.Value = 3;
@@ -321,7 +317,6 @@ namespace SchetsEditor
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SchetsWin";
             this.ResumeLayout(false);
-
         }
     }
 }

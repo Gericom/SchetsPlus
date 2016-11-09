@@ -12,22 +12,26 @@
 	- Teken
 		- Alle objecten uit de lijst worden getekend, ipv een bitmap
 	- Clear (het oude schoon)
-	- voor het detectie van het object wordt iedere object in een unieke kleur, die tevens een id is, naar een bitmap getekend. Vervolgens wordt een pixel uit de bitmap opgevraagd en wordt er gekeken of het een valide id is.
-	  Indien dit het geval is wordt het object behorende bij het id teruggegeven.
+	- Voor het detectie van het object onder een bepaalde pixel wordt ieder object in een unieke kleur, die eigenlijk een id is, naar een bitmap getekend.
+	  Vervolgens wordt de pixel uit de bitmap opgevraagd, en dus het id, en wordt er gekeken of die valide is.
+	  Als dit het geval is wordt het object behorende bij het id teruggegeven, en anders null. Dit voorkomt een hoop gedoe met bounds checking en dergelijke.
+	- Het bijhouden van een lijst van drawingobjecten en het faciliteren van undo en redo wordt gedaan met behulp van de classe HistoryCollection.
+	  HistoryCollection houdt een lijst van lijsten bij voor de undo/redo levels en een nummer die het huidige level aangeeft. Bij iedere verandering
+	  (add/remove/mutate/moveup/movedown) wordt er een nieuwe lijst gemaakt die de nieuwe staat representeerd. Hogere levels (redo) worden dan eerst gewist.
+	  Behalve losse acties maakt HistoryCollection het ook mogelijk om meerdere acties als één actie op te slaan (bijvoorbeeld clear of rotate), met behulp
+	  van BeginAtomicAction/EndAtomicAction. Mutate maakt het mogelijk eigenschappen van een object aan te passen zonder dat dat doorwerkt in de geschiedenis.
+	  Dit wordt gedaan door de Clone methode aan te roepen die in elk drawingobject zit. Objecten worden dus allen gekloont als dat echt nodig is.
 - DrawingObjects
-	-Alles dat getekend wordt naar object verplaatst, dus weg uit de tools
--Resources
-	-Andere icoontjes toegevoegd!
--Schetswin
-	-Form Closing message toegevoegd
-	-Save methode toegevoegd om tekeningen op te slaan en weer te kunnen openen later
-	-buttons for undo en redo toegevoegd
-	-NumericupDown toegevoegd voor het veranderen van de dikte van je lijnen (tools)
-	-kleurenpicker button toegevoegd en is nu een palette dialoog
--Tools
-	-Cirkels toegevoegd
-	-MoveUp, MoveDown en DragTool toegevoegd
-	-Nieuwe Manier van gummen (zie schets)
-
-
-
+	- Alles dat getekend wordt naar object verplaatst, dus weg uit de tools
+- Resources
+	- Andere icoontjes toegevoegd!
+- Schetswin
+	- Form Closing message toegevoegd
+	- Save methode toegevoegd om tekeningen op te slaan en weer te kunnen openen later
+	- Buttons for undo en redo toegevoegd
+	- NumericupDown toegevoegd voor het veranderen van de dikte van je lijnen (tools)
+	- Kleurenpicker button toegevoegd en is nu een palette dialoog
+- Tools
+	- Cirkels toegevoegd
+	- MoveUp, MoveDown en DragTool toegevoegd
+	- Nieuwe Manier van gummen (zie schets)
