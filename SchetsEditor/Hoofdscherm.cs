@@ -58,7 +58,7 @@ namespace SchetsEditor
         }
         private void about(object o, EventArgs ea)
         {
-            MessageBox.Show("Schets versie 1.0\n(c) UU Informatica 2010"
+            MessageBox.Show("Schets versie 2.0\n(c) UU Informatica 2016"
                            , "Over \"Schets\""
                            , MessageBoxButtons.OK
                            , MessageBoxIcon.Information
