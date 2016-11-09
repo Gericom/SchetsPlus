@@ -64,7 +64,7 @@ namespace SchetsEditor
 
             //we can add the colour palette to this or extend the color array?
             String[] mColours = { "Black", "Red", "Green", "Blue"
-                                 , "Yellow", "Magenta", "Cyan","Brown","Teal" 
+                                 , "Yellow", "Magenta", "Cyan","Brown","Teal"
                                  };
 
             this.ClientSize = new Size(700, 500);
@@ -241,7 +241,7 @@ namespace SchetsEditor
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
 
-            Button b; Label l;// ComboBox cbb;
+            Button b; Label l, q;// ComboBox cbb;
             b = new Button();
             b.Text = "Clear";
             b.Location = new Point(0, 0);
@@ -266,14 +266,25 @@ namespace SchetsEditor
             b.Click += schetsControl.Redo;
             paneel.Controls.Add(b);
 
+            q = new Label();
+            q.Text = "Pen Size:";
+            q.Location = new Point(320, 3);
+            q.AutoSize = true;
+            paneel.Controls.Add(q);
+
+            NumericUpDown h = new NumericUpDown();
+            h.Location = new Point(380, 0);
+            h.Size = new Size(50,10);
+            paneel.Controls.Add(h);
+
             l = new Label();
             l.Text = "Pen Colour:";
-            l.Location = new Point(330, 3);
+            l.Location = new Point(440, 3);
             l.AutoSize = true;
             paneel.Controls.Add(l);
 
             Button cbb = new Button();
-            cbb.Location = new Point(400, 0);
+            cbb.Location = new Point(510, 0);
             cbb.Text = "";
             cbb.BackColor = Color.Black;
             schetsControl.penColor = Color.Black;

@@ -13,6 +13,7 @@ namespace SchetsEditor
 
 
         public Color penColor { get; set; }
+        public Size penSize { get; set; }
         //{
        //     get { return pencolour; }
        // }
@@ -81,6 +82,7 @@ namespace SchetsEditor
             this.DoubleBuffered = true;
             this.Name = "SchetsControl";
             this.ResumeLayout(false);
+
         }
     }
 }

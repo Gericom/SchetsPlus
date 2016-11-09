@@ -137,7 +137,7 @@ namespace SchetsEditor
         public override void MouseDown(SchetsControl s, Point p)
         {
             base.MouseDown(s, p);
-            mDrawingObject = new EllipseObject() { Color = s.penColor, Filled = false, Position = p, Size = new Size(0, 0) };
+            mDrawingObject = new EllipseObject() { Color = s.penColor, Filled = false, Position = p, Size = new Size(0,0) };
             s.Schets.BeginAddObject(mDrawingObject);
         }
 
