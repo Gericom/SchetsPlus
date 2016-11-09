@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>hokker.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -102,29 +105,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\gum.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lijn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fillrect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\circle.png" />
-    <None Include="Resources\border-circle.png" />
-    <None Include="Resources\FilledEllipseTool_16x.png" />
-    <None Include="Resources\Ellipse_outline_16x.png" />
-    <None Include="Resources\RectangleTool_16x.png" />
-    <None Include="Resources\FilledRectangleTool_16x.png" />
-    <None Include="Resources\ForwardSlash_16x.png" />
-    <None Include="Resources\Pen1_16x.png" />
-    <None Include="Resources\Eraser_16x.png" />
-    <None Include="Resources\TextElement_16x.png" />
-    <None Include="Resources\Ellipse_16x.png" />
     <None Include="Resources\ellipse.png" />
     <None Include="Resources\eraser.png" />
     <None Include="Resources\rectangle.png" />
@@ -136,6 +116,7 @@
     <None Include="Resources\Download_grey_32x.png" />
     <None Include="Resources\Upload_gray_32x.png" />
     <None Include="Resources\DragPanel_32x.png" />
+    <Content Include="hokker.ico" />
     <Content Include="Veranderingen.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
