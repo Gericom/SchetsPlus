@@ -68,18 +68,24 @@ namespace SchetsEditor.DrawingObjects
 
         public override void Write(BinaryWriter writer)
         {
-            writer.Write((byte)DrawingObject.DrawingObjectType.BitmapObject);
+            writer.Write((byte)DrawingObjectType.BitmapObject);
             base.Write(writer);
             writer.Write(Position.X);
             writer.Write(Position.Y);
             writer.Write((byte)(Erasable ? 1 : 0));
             writer.Write(Bitmap.Width);
             writer.Write(Bitmap.Height);
-            BitmapData d = Bitmap.LockBits(new Rectangle(0, 0, Bitmap.Width, Bitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            BitmapData d = Bitmap.LockBits(new Rectangle(0, 0, Bitmap.Width, Bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             byte[] bdata = new byte[d.Stride * d.Height];
             Marshal.Copy(d.Scan0, bdata, 0, d.Stride * d.Height);
             Bitmap.UnlockBits(d);
             writer.Write(bdata, 0, bdata.Length);
+        }
+
+        public override void Translate(Point delta)
+        {
+            FixRot(ref delta);
+            Position = new Point(Position.X + delta.X, Position.Y + delta.Y);
         }
     }
 }

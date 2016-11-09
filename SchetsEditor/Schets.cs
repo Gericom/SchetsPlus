@@ -89,6 +89,13 @@ namespace SchetsEditor
             HasUnsavedChanges = true;
         }
 
+        public DrawingObject Mutate(DrawingObject dObject)
+        {
+            DrawingObject mutated = mHistoryObjects.Mutate(dObject);
+            HasUnsavedChanges = true;
+            return mutated;
+        }
+
         public void BeginAddObject(DrawingObject dObject)
         {
             mWorkingObject = dObject;

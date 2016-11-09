@@ -133,6 +133,9 @@
     <None Include="Resources\filledrectangle.png" />
     <None Include="Resources\text.png" />
     <None Include="Resources\filledellipse.png" />
+    <None Include="Resources\Download_grey_32x.png" />
+    <None Include="Resources\Upload_gray_32x.png" />
+    <None Include="Resources\DragPanel_32x.png" />
     <Content Include="Veranderingen.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

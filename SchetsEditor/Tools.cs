@@ -55,6 +55,11 @@ namespace SchetsEditor
                 ((TextObject)mDrawingObject).Text += c;
                 s.Invalidate();
             }
+            else if (c == '\b' && ((TextObject)mDrawingObject).Text.Length > 0)
+            {
+                ((TextObject)mDrawingObject).Text = ((TextObject)mDrawingObject).Text.Substring(0, ((TextObject)mDrawingObject).Text.Length - 1);
+                s.Invalidate();
+            }
         }
     }
 
@@ -65,13 +70,6 @@ namespace SchetsEditor
             return new Rectangle(new Point(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y))
                                 , new Size(Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y))
                                 );
-        }
-        public static Pen MaakPen(Brush b, int dikte)
-        {
-            Pen pen = new Pen(b, dikte);
-            pen.StartCap = LineCap.Round;
-            pen.EndCap = LineCap.Round;
-            return pen;
         }
         public override void MouseDown(SchetsControl s, Point p)
         {
@@ -200,6 +198,7 @@ namespace SchetsEditor
         {
             base.MouseDown(s, p);
             mPoints = new List<Point>();
+            mPoints.Add(p);
         }
 
         private List<Point> mPoints;
@@ -261,7 +260,7 @@ namespace SchetsEditor
 
         public override void MouseDown(SchetsControl s, Point p)
         {
-            base.MouseDown(s, p);
+            //base.MouseDown(s, p);
 
         }
         public override void MouseDrag(SchetsControl s, Point p)
@@ -270,10 +269,42 @@ namespace SchetsEditor
         }
         public override void MouseUp(SchetsControl s, Point p)
         {
-            base.MouseUp(s, p);
+            //base.MouseUp(s, p);
             var obj = s.Schets.FindObjectByPoint(p);
             if (obj != null)
                 s.Schets.MoveObjectDown(obj);
+            s.Invalidate();
+        }
+    }
+
+    public class DragTool : StartpuntTool
+    {
+        public override string ToString() { return "Drag"; }
+
+        public override void MouseDown(SchetsControl s, Point p)
+        {
+            base.MouseDown(s, p);
+            var obj = s.Schets.FindObjectByPoint(p);
+            if(obj != null)
+                mDrawingObject = s.Schets.Mutate(obj);
+        }
+        public override void MouseDrag(SchetsControl s, Point p)
+        {
+            if (mDrawingObject != null)
+            {
+                mDrawingObject.Translate(new Point(p.X - startpunt.X, p.Y - startpunt.Y));
+                startpunt = p;
+                s.Invalidate();
+            }
+        }
+        public override void MouseUp(SchetsControl s, Point p)
+        {
+            /*base.MouseUp(s, p);
+            var obj = s.Schets.FindObjectByPoint(p);
+            if (obj != null)
+                s.Schets.MoveObjectDown(obj);*/
+            MouseDrag(s, p);
+            mDrawingObject = null;
             s.Invalidate();
         }
     }

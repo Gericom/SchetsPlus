@@ -43,8 +43,7 @@ namespace SchetsEditor.DrawingObjects
             g.RotateTransform(mRotationAngle);
             g.TranslateTransform(-mRotationCenter.X, -mRotationCenter.Y);
             Font font = new Font("Calibri", 40);
-            g.DrawString(Text, font, new SolidBrush(colorOverride),
-                                          Position, StringFormat.GenericTypographic);
+            g.DrawString(Text, font, new SolidBrush(colorOverride), Position, StringFormat.GenericTypographic);
             g.Restore(gs);
         }
 
@@ -57,6 +56,12 @@ namespace SchetsEditor.DrawingObjects
             byte[] textbytes = Encoding.Unicode.GetBytes(Text);
             writer.Write(textbytes.Length);
             writer.Write(textbytes, 0, textbytes.Length);
+        }
+
+        public override void Translate(Point delta)
+        {
+            FixRot(ref delta);
+            Position = new Point(Position.X + delta.X, Position.Y + delta.Y);
         }
     }
 }

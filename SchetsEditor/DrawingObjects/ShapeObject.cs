@@ -44,5 +44,11 @@ namespace SchetsEditor.DrawingObjects
             writer.Write((byte)(Filled ? 1 : 0));
             writer.Write(LineWidth);
         }
+
+        public override void Translate(Point delta)
+        {
+            FixRot(ref delta);
+            Position = new Point(Position.X + delta.X, Position.Y + delta.Y);
+        }
     }
 }

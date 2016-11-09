@@ -44,6 +44,28 @@ namespace SchetsEditor.DrawingObjects
 
         public abstract void Draw(Graphics g, Color colorOverride, bool picking = false);
 
+        public void FixRot(ref Point p)
+        {
+            if (mRotationAngle == 0) ;
+            else if (mRotationAngle == 90)
+            {
+                int swap = p.Y;
+                p.Y = -p.X;
+                p.X = swap;
+            }
+            else if (mRotationAngle == 180)
+            {
+                p.X = -p.X;
+                p.Y = -p.Y;
+            }
+            else if (mRotationAngle == 270)
+            {
+                int swap = p.Y;
+                p.Y = p.X;
+                p.X = -swap;
+            }
+        }
+
         public void Rotate(int width, int height)
         {
             mRotationCenter = new Point(width / 2, height / 2);
@@ -58,5 +80,7 @@ namespace SchetsEditor.DrawingObjects
             writer.Write(mRotationCenter.Y);
             writer.Write(mRotationAngle);
         }
+
+        public abstract void Translate(Point delta);
     }
 }

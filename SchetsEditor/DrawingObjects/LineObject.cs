@@ -48,8 +48,17 @@ namespace SchetsEditor.DrawingObjects
             g.TranslateTransform(mRotationCenter.X, mRotationCenter.Y);
             g.RotateTransform(mRotationAngle);
             g.TranslateTransform(-mRotationCenter.X, -mRotationCenter.Y);
-            var pen = new Pen(new SolidBrush(colorOverride), (picking ? LineWidth + 2 : LineWidth));
-            g.DrawCurve(pen, Points, 0);
+            if (Points.Length == 2 && Points[0] == Points[1])
+            {
+                int lwidth = (picking ? LineWidth + 2 : LineWidth);
+                g.FillEllipse(new SolidBrush(colorOverride), Points[0].X - lwidth / 2f, Points[0].Y - lwidth / 2f, lwidth, lwidth);
+            }
+            else
+            {
+                var pen = new Pen(new SolidBrush(colorOverride), (picking ? LineWidth + 2 : LineWidth))
+                { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round, LineJoin = System.Drawing.Drawing2D.LineJoin.Round };
+                g.DrawLines(pen, Points);
+            }
             g.Restore(gs);
         }
 
@@ -64,6 +73,13 @@ namespace SchetsEditor.DrawingObjects
                 writer.Write(p.X);
                 writer.Write(p.Y);
             }
+        }
+
+        public override void Translate(Point delta)
+        {
+            FixRot(ref delta);
+            for(int i = 0; i < Points.Length; i++)
+                Points[i] = new Point(Points[i].X + delta.X, Points[i].Y + delta.Y);
         }
     }
 }

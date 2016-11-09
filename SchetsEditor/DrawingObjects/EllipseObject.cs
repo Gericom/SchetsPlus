@@ -33,7 +33,7 @@ namespace SchetsEditor.DrawingObjects
             if (Filled)
                 g.FillEllipse(new SolidBrush(colorOverride), new Rectangle(Position, Size));
             else
-                g.DrawEllipse(new Pen(new SolidBrush(colorOverride), (picking ? LineWidth + 2 : LineWidth)), new Rectangle(Position, Size));
+                g.DrawEllipse(new Pen(new SolidBrush(colorOverride), (picking ? LineWidth + 2 : LineWidth)) { LineJoin = System.Drawing.Drawing2D.LineJoin.Round }, new Rectangle(Position, Size));
             g.Restore(gs);
         }
 

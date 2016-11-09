@@ -61,15 +61,11 @@ namespace SchetsEditor
                                     , new TekstTool()
                                     , new GumTool(),
                                     new MoveUpTool(),
-                                    new MoveDownTool()
+                                    new MoveDownTool(),
+                                    new DragTool()
                                     };
 
-            //we can add the colour palette to this or extend the color array?
-            String[] mColours = { "Black", "Red", "Green", "Blue"
-                                 , "Yellow", "Magenta", "Cyan","Brown","Teal"
-                                 };
-
-            this.ClientSize = new Size(700, 550);
+            this.ClientSize = new Size(800, 625);
             currentTool = mTools[0];
 
             schetsControl = new SchetsControl();
@@ -102,9 +98,9 @@ namespace SchetsEditor
             this.Controls.Add(menuStrip);
             this.makeFileMenu();
             this.makeToolMenu(mTools);
-            this.makeActionMenu(mColours);
+            this.makeActionMenu();
             this.makeToolButtons(mTools);
-            this.makeActionButtons(mColours);
+            this.makeActionButtons();
             this.Resize += this.sizeChange;
             this.sizeChange(null, null);
             FormClosing += SchetsWin_FormClosing;
@@ -197,17 +193,18 @@ namespace SchetsEditor
             menuStrip.Items.Add(menu);
         }
 
-        private void makeActionMenu(String[] kleuren)
+        private void makeActionMenu()
         {
             ToolStripMenuItem menu = new ToolStripMenuItem("Action") { MergeIndex = 2, MergeAction = MergeAction.Insert };
             menu.DropDownItems.Add("Clear", null, schetsControl.Clear);
             menu.DropDownItems.Add("Rotate", null, schetsControl.Rotate);
             menu.DropDownItems.Add("Undo", null, schetsControl.Undo);
             menu.DropDownItems.Add("Redo", null, schetsControl.Redo);
-            ToolStripMenuItem submenu = new ToolStripMenuItem("Colors");
-            foreach (string k in kleuren)
-                submenu.DropDownItems.Add(k, null, schetsControl.VeranderKleurViaMenu);
-            menu.DropDownItems.Add(submenu);
+            menu.DropDownItems.Add("Choose Color", null, MColorButton_Click);
+            // ToolStripMenuItem submenu = new ToolStripMenuItem("Colors");
+            //foreach (string k in kleuren)
+            //    submenu.DropDownItems.Add(k, null, schetsControl.VeranderKleurViaMenu);
+            //menu.DropDownItems.Add(submenu);
             menuStrip.Items.Add(menu);
         }
 
@@ -237,7 +234,9 @@ namespace SchetsEditor
             this.Controls.Add(s);
         }
 
-        private void makeActionButtons(String[] kleuren)
+        Button mColorButton;
+
+        private void makeActionButtons()
         {
             paneel = new Panel();
             paneel.Size = new Size(600, 24);
@@ -278,7 +277,7 @@ namespace SchetsEditor
             h.Location = new Point(380, 0);
             h.Size = new Size(50,10);
             h.Minimum = 1;
-            h.Maximum = 20;
+            h.Maximum = 50;
             h.Value = 3;
             schetsControl.PenSize = 3;
             h.ValueChanged += (d, f) => { schetsControl.PenSize = (int)h.Value; };
@@ -290,23 +289,23 @@ namespace SchetsEditor
             l.AutoSize = true;
             paneel.Controls.Add(l);
 
-            Button cbb = new Button();
-            cbb.Location = new Point(510, 0);
-            cbb.Text = "";
-            cbb.BackColor = Color.Black;
+            mColorButton = new Button();
+            mColorButton.Location = new Point(510, 0);
+            mColorButton.Text = "";
+            mColorButton.BackColor = Color.Black;
             schetsControl.PenColor = Color.Black;
-            cbb.Click += Cbb_Click;
-            paneel.Controls.Add(cbb);
+            mColorButton.Click += MColorButton_Click;
+            paneel.Controls.Add(mColorButton);
         }
 
-        private void Cbb_Click(object sender, EventArgs e)
+        private void MColorButton_Click(object sender, EventArgs e)
         {
             var cd = new ColorDialog();
             cd.Color = schetsControl.PenColor;
             if (cd.ShowDialog() == DialogResult.OK)
             {
                 schetsControl.PenColor = cd.Color;
-                ((Button)sender).BackColor = cd.Color;
+                mColorButton.BackColor = cd.Color;
             }
         }
 
