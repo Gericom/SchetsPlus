@@ -11,10 +11,12 @@ namespace SchetsEditor
     public class Schets
     {
         private List<DrawingObject> mDrawingObjectList = new List<DrawingObject>();
+        //private List<DrawingObject> BackupDrawingObjectList = new List<DrawingObject>();
         private DrawingObject mWorkingObject;
         private Size mSchetsSize;
 
         public Boolean HasUnsavedChanges { get; private set; } = false;
+       // public Boolean HasRemovedObject { get; private set; } = false;
 
         public void AcknowledgeChanges()
         {
@@ -58,6 +60,12 @@ namespace SchetsEditor
             foreach (DrawingObject d in mDrawingObjectList)
                 d.Rotate(mSchetsSize.Width, mSchetsSize.Height);
             HasUnsavedChanges = true;
+        }
+
+        public void Undo()
+        {
+            //if ( HasRemovedObject == true || mDrawingObjectList != null || BackupDrawingObjectList != null ) ;
+
         }
 
         public void BeginAddObject(DrawingObject dObject)

@@ -9,6 +9,8 @@ namespace SchetsEditor
     {
         private Schets schets;
         private Color pencolour;
+        //private Color[] palette;
+
 
         public Color penColour
         {
@@ -49,6 +51,11 @@ namespace SchetsEditor
             schets.Rotate();
             this.Invalidate();
         }
+        public void Undo(object o, EventArgs ea)
+        {
+            schets.Undo();
+            this.Invalidate();
+        }
         public void VeranderKleur(object obj, EventArgs ea)
         {
             string colourName = ((ComboBox)obj).Text;
@@ -59,7 +66,6 @@ namespace SchetsEditor
             string colourName = ((ToolStripMenuItem)obj).Text;
             pencolour = Color.FromName(colourName);
         }
-
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -69,7 +75,6 @@ namespace SchetsEditor
             this.DoubleBuffered = true;
             this.Name = "SchetsControl";
             this.ResumeLayout(false);
-
         }
     }
 }
