@@ -12,4 +12,22 @@
 	- Teken
 		- Alle objecten uit de lijst worden getekend, ipv een bitmap
 	- Clear (het oude schoon)
-		- 
+	- voor het detectie van het object wordt iedere object in een unieke kleur, die tevens een id is, naar een bitmap getekend. Vervolgens wordt een pixel uit de bitmap opgevraagd en wordt er gekeken of het een valide id is.
+	  Indien dit het geval is wordt het object behorende bij het id teruggegeven.
+- DrawingObjects
+	-Alles dat getekend wordt naar object verplaatst, dus weg uit de tools
+-Resources
+	-Andere icoontjes toegevoegd!
+-Schetswin
+	-Form Closing message toegevoegd
+	-Save methode toegevoegd om tekeningen op te slaan en weer te kunnen openen later
+	-buttons for undo en redo toegevoegd
+	-NumericupDown toegevoegd voor het veranderen van de dikte van je lijnen (tools)
+	-kleurenpicker button toegevoegd en is nu een palette dialoog
+-Tools
+	-Cirkels toegevoegd
+	-MoveUp, MoveDown en DragTool toegevoegd
+	-Nieuwe Manier van gummen (zie schets)
+
+
+
